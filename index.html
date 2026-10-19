@@ -330,6 +330,7 @@ em{font-style:normal;color:var(--lima)}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 </style>
+<link rel="stylesheet" href="assets/nav.css">
 
 <div class="loader" id="loader" role="status" aria-live="polite">
   <svg class="mark draw" viewBox="-12 -12 136 167" aria-hidden="true"><path class="mk-line" pathLength="1" d="M92 11H11V64L92 79V132H11"/><circle cx="92" cy="11" r="11"/><circle cx="11" cy="11" r="11"/><circle cx="11" cy="64" r="11"/><circle cx="92" cy="79" r="11"/><circle cx="92" cy="132" r="11"/><circle cx="11" cy="132" r="11"/></svg>
@@ -339,7 +340,8 @@ em{font-style:normal;color:var(--lima)}
 <header class="topo" id="topo">
   <div class="pilula">
     <a class="logo" href="index.html" id="logo" aria-label="Saotech Geotecnologia, início"><svg class="mark" id="logoMark" viewBox="-12 -12 136 167" aria-hidden="true"><path class="mk-line" pathLength="1" d="M92 11H11V64L92 79V132H11"/><circle cx="92" cy="11" r="11"/><circle cx="11" cy="11" r="11"/><circle cx="11" cy="64" r="11"/><circle cx="92" cy="79" r="11"/><circle cx="92" cy="132" r="11"/><circle cx="11" cy="132" r="11"/></svg><img src="data:image/png;base64,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" alt=""></a>
-    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+    <a class="btn btn-lima cta-mob" href="https://wa.me/5528999273720?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento.">Orçamento</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="gaveta" aria-label="Abrir menu"><span class="hb" aria-hidden="true"><i></i><i></i></span></button>
     <nav class="menu" id="menu" aria-label="Principal"><a href="index.html" aria-current="page">Início</a><a href="servicos.html">Serviços</a><a href="como-funciona.html">Como funciona</a><a href="sobre.html">Sobre</a><a href="blog.html">Blog</a><a href="contato.html">Contato</a></nav>
     <div class="acoes">
       <a class="btn btn-vidro" href="https://gestaosaotech.netlify.app">Área do Cliente</a>
@@ -347,6 +349,23 @@ em{font-style:normal;color:var(--lima)}
     </div>
   </div>
 </header>
+
+<div class="gaveta" id="gaveta" aria-hidden="true">
+  <canvas aria-hidden="true"></canvas>
+  <p class="gv-rotulo">Menu</p>
+  <nav class="gv-nav" aria-label="Menu principal"><a href="index.html" aria-current="page"><span class="n">01</span><span class="t">Início</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="servicos.html"><span class="n">02</span><span class="t">Serviços</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="como-funciona.html"><span class="n">03</span><span class="t">Como funciona</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="sobre.html"><span class="n">04</span><span class="t">Sobre</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="blog.html"><span class="n">05</span><span class="t">Blog</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="contato.html"><span class="n">06</span><span class="t">Contato</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></nav>
+  <div class="gv-acoes">
+    <a class="btn btn-lima" href="https://wa.me/5528999273720?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento.">Pedir orçamento pelo WhatsApp <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a class="btn btn-vidro" href="https://gestaosaotech.netlify.app">Área do Cliente</a>
+    <a class="btn btn-vidro" href="tel:+5528999273720">Ligar</a>
+  </div>
+  <div class="gv-contato">
+    <a href="https://wa.me/5528999273720"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/></svg>(28) 99927-3720</a>
+    <a href="mailto:saotechgeotecnologia@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>saotechgeotecnologia@gmail.com</a>
+    <a href="https://instagram.com/saotechgeo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg>@saotechgeo</a>
+    <small>Atendemos todo o Espírito Santo</small>
+  </div>
+</div>
 
 <main id="inicio">
   <!-- HISTÓRIA COM TERRENO 3D -->
@@ -723,6 +742,7 @@ em{font-style:normal;color:var(--lima)}
 "use strict";
 const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (s)=>document.querySelector(s);
+const CEL = innerWidth<720;
 
 /* ================= Carregamento ================= */
 const carga = { alvo:0, atual:0, inicio:performance.now(), feito:false, fim:0 };
@@ -744,15 +764,13 @@ function fechaCarga(){
   $('#loader').classList.add('fora');
   const m=$('#logoMark'); m.classList.remove('draw'); void m.getBoundingClientRect(); m.classList.add('draw');
 }
-if(reduz){ fechaCarga(); } else { requestAnimationFrame(tickCarga); setTimeout(fechaCarga, 3800); }
+if(reduz){ fechaCarga(); } else { requestAnimationFrame(tickCarga); setTimeout(fechaCarga, 4200); }
 (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(()=>marca('fontes'));
 
 /* Logo redesenha ao passar o mouse */
 $('#logo').addEventListener('mouseenter',()=>{ if(reduz) return; const m=$('#logoMark'); m.classList.remove('draw'); void m.getBoundingClientRect(); m.classList.add('draw'); });
 
-/* Menu no celular */
-$('#menuBtn').addEventListener('click',()=>{ const t=$('#topo'); const ab=t.classList.toggle('aberto'); $('#menuBtn').setAttribute('aria-expanded',ab); $('#menuBtn').setAttribute('aria-label',ab?'Fechar menu':'Abrir menu'); });
-document.querySelectorAll('#menu a').forEach(a=>a.addEventListener('click',()=>{ $('#topo').classList.remove('aberto'); $('#menuBtn').setAttribute('aria-expanded','false'); }));
+/* Menu no celular: assets/nav.js */
 
 /* ================= Terreno (gerado, determinístico) ================= */
 const TAM=14, HMAX=3.4;
@@ -767,9 +785,40 @@ function altura(x,z){
   return h;
 }
 const POLI=[[-2.7,-1.5],[0.1,-2.6],[3.0,-1.3],[3.3,1.3],[0.7,2.5],[-2.3,2.0]];
+const ss=(a,b,x)=>{ const t=Math.min(Math.max((x-a)/(b-a),0),1); return t*t*(3-2*t); };
+const lerp=(a,b,t)=>a+(b-a)*t; const lerp3=(a,b,t)=>[lerp(a[0],b[0],t),lerp(a[1],b[1],t),lerp(a[2],b[2],t)];
+const hex=(h)=>[parseInt(h.slice(1,3),16)/255,parseInt(h.slice(3,5),16)/255,parseInt(h.slice(5,7),16)/255];
+
+/* Paisagem: estrada de terra, carreador até a sede, córrego com açude, eucalipto e café */
+function suave(P,k){ const o=[]; for(let i=0;i<P.length-1;i++){ const p0=P[Math.max(i-1,0)],p1=P[i],p2=P[i+1],p3=P[Math.min(i+2,P.length-1)];
+  for(let s=0;s<k;s++){ const t=s/k,t2=t*t,t3=t2*t; o.push([0,1].map(d=>0.5*((2*p1[d])+(-p0[d]+p2[d])*t+(2*p0[d]-5*p1[d]+4*p2[d]-p3[d])*t2+(-p0[d]+3*p1[d]-3*p2[d]+p3[d])*t3))); } }
+  o.push(P[P.length-1]); return o; }
+const ESTRADA=suave([[-7.4,2.0],[-5.2,2.85],[-3.2,3.2],[-1.2,3.35],[1.0,3.15],[3.0,2.65],[4.7,2.1],[6.0,0.7],[7.4,-0.5]],3);
+const CARREADOR=suave([[0.15,3.25],[0.35,2.2],[0.95,1.05],[1.55,0.35]],3);
+const RIO=suave([[-1.9,-3.4],[-2.35,-1.6],[-2.3,-0.2],[-2.2,0.5],[-2.0,1.4],[-1.85,2.5],[-2.4,3.7],[-3.6,4.9],[-5.6,7.3]],3);
+const ACUDE=[-2.2,0.5,0.56,0.42];
+const SEDE=[1.62,0.22];
+const EUCA={cx:4.3,cz:-4.4,hx:1.45,hz:1.05,ang:0.32};
+function dLinha(x,z,L){ let m=1e9; for(let i=0;i<L.length-1;i++){ const a=L[i],b=L[i+1],bx=b[0]-a[0],bz=b[1]-a[1]; const t=Math.min(Math.max(((x-a[0])*bx+(z-a[1])*bz)/(bx*bx+bz*bz),0),1); m=Math.min(m,Math.hypot(x-a[0]-bx*t,z-a[1]-bz*t)); } return m; }
+function dentro(x,z){ let ins=false; for(let i=0,j=5;i<6;j=i++){ const a=POLI[i],b=POLI[j]; if(((a[1]>z)!==(b[1]>z)) && (x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0])) ins=!ins; } return ins; }
+function noEuca(x,z,m){ const c=Math.cos(EUCA.ang),s=Math.sin(EUCA.ang),dx=x-EUCA.cx,dz=z-EUCA.cz,u=dx*c-dz*s,v=dx*s+dz*c; return Math.abs(u)<EUCA.hx-(m||0)&&Math.abs(v)<EUCA.hz-(m||0); }
+function dAcude(x,z){ return Math.hypot((x-ACUDE[0])/ACUDE[2],(z-ACUDE[1])/ACUDE[3]); }
+/* Máscaras por ponto: [mata, café, eucalipto, várzea] */
+function bio(x,z){
+  const y=altura(x,z), dr=dLinha(x,z,RIO), de=Math.min(dLinha(x,z,ESTRADA),dLinha(x,z,CARREADOR)+0.05), ins=dentro(x,z);
+  const eu=noEuca(x,z)?1:0;
+  let m=ss(0.47,0.56,fbm(x*0.30+40.0,z*0.30-12.0)+0.05*y);
+  if(ins) m*=0.18;
+  m=Math.max(m, 1-ss(0.22,0.52,dr));                 // mata ciliar (APP do córrego)
+  m*=ss(0.14,0.34,de)*ss(1.05,1.35,dAcude(x,z))*(1-eu)*ss(0.25,0.5,Math.hypot(x-SEDE[0],z-SEDE[1]));
+  let c=ss(0.52,0.58,fbm(x*0.40-7.0,z*0.40+19.0))*ss(0.35,0.9,y)*(1-m)*(1-eu)*ss(0.16,0.32,de)*ss(0.3,0.6,dr);
+  if(ins) c*=0.35;
+  const w=(1-ss(0.15,0.9,dr))*(1-m*0.5);
+  return [m,c,eu,w];
+}
 
 function malha(N){
-  const n=N+1, pos=new Float32Array(n*n*3), nor=new Float32Array(n*n*3), e=0.04;
+  const n=N+1, pos=new Float32Array(n*n*3), nor=new Float32Array(n*n*3), bi=new Float32Array(n*n*4), ao=new Float32Array(n*n), e=0.04;
   let k=0;
   for(let j=0;j<n;j++) for(let i=0;i<n;i++){
     const x=(i/N-.5)*TAM, z=(j/N-.5)*TAM, y=altura(x,z);
@@ -777,54 +826,228 @@ function malha(N){
     const dx=(altura(x+e,z)-altura(x-e,z))/(2*e), dz=(altura(x,z+e)-altura(x,z-e))/(2*e);
     const l=Math.hypot(dx,1,dz); nor[k]=-dx/l; nor[k+1]=1/l; nor[k+2]=-dz/l; k+=3;
   }
+  // oclusão de ambiente aproximada: vales e grotas mais escuros
+  const R=Math.max(2,Math.round(N/28));
+  for(let j=0;j<n;j++) for(let i=0;i<n;i++){
+    let s=0,c=0; for(let dj=-R;dj<=R;dj+=R) for(let di=-R;di<=R;di+=R){ if(!di&&!dj) continue; const ii=Math.min(Math.max(i+di,0),N), jj=Math.min(Math.max(j+dj,0),N); s+=pos[(jj*n+ii)*3+1]; c++; }
+    const d=s/c-pos[(j*n+i)*3+1]; ao[j*n+i]=Math.min(Math.max(1-d*1.1,0.62),1.08);
+    const b=bio(pos[(j*n+i)*3],pos[(j*n+i)*3+2]); bi.set(b,(j*n+i)*4);
+  }
   const idx=new Uint32Array(N*N*6); k=0;
   for(let j=0;j<N;j++) for(let i=0;i<N;i++){ const a=j*n+i,b=a+1,c=a+n,d=c+1; idx[k++]=a; idx[k++]=c; idx[k++]=b; idx[k++]=b; idx[k++]=c; idx[k++]=d; }
-  return {pos,nor,idx,n};
+  return {pos,nor,bi,ao,idx,n};
+}
+
+/* ================= Objetos 3D: árvores, eucalipto, sede, marcos e GNSS ================= */
+let LOD=1;   // 0 = versão leve (modelo de RA)
+function Obj(){ return {p:[],n:[],c:[],i:[]}; }
+function tri(M,a,b,c,cor,nn){ const o=M.p.length/3; [a,b,c].forEach(v=>{ M.p.push(v[0],v[1],v[2]); M.n.push(nn[0],nn[1],nn[2]); M.c.push(cor[0],cor[1],cor[2]); }); M.i.push(o,o+1,o+2); }
+function quad(M,a,b,c,d,cor){ const u=[b[0]-a[0],b[1]-a[1],b[2]-a[2]], v=[d[0]-a[0],d[1]-a[1],d[2]-a[2]]; let nn=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]]; const l=Math.hypot(...nn)||1; nn=nn.map(q=>q/l);
+  const o=M.p.length/3; [a,b,c,d].forEach(q=>{ M.p.push(q[0],q[1],q[2]); M.n.push(nn[0],nn[1],nn[2]); M.c.push(cor[0],cor[1],cor[2]); }); M.i.push(o,o+1,o+2,o,o+2,o+3); }
+function prisma(M,a,b,r,cor,lados){ // barra de seção poligonal entre os pontos a e b
+  const d=[b[0]-a[0],b[1]-a[1],b[2]-a[2]], L=Math.hypot(...d); const w=d.map(q=>q/L);
+  let u=Math.abs(w[1])<0.9?[0,1,0]:[1,0,0]; u=[w[1]*u[2]-w[2]*u[1],w[2]*u[0]-w[0]*u[2],w[0]*u[1]-w[1]*u[0]]; let l=Math.hypot(...u); u=u.map(q=>q/l);
+  const v=[w[1]*u[2]-w[2]*u[1],w[2]*u[0]-w[0]*u[2],w[0]*u[1]-w[1]*u[0]];
+  const S=lados||6, ring=(p)=>{ const o=[]; for(let k=0;k<S;k++){ const t=k/S*Math.PI*2, cc=Math.cos(t)*r, sn=Math.sin(t)*r; o.push([p[0]+u[0]*cc+v[0]*sn,p[1]+u[1]*cc+v[1]*sn,p[2]+u[2]*cc+v[2]*sn]); } return o; };
+  const A=ring(a),B=ring(b); for(let k=0;k<S;k++){ const k2=(k+1)%S; quad(M,A[k],A[k2],B[k2],B[k],cor); }
+  if(LOD) for(let k=1;k<S-1;k++){ tri(M,B[0],B[k+1],B[k],cor,w); tri(M,A[0],A[k],A[k+1],cor,w.map(q=>-q)); }
+}
+function caixa(M,x0,y0,z0,x1,y1,z1,cor,semFundo){
+  const P=(x,y,z)=>[x,y,z];
+  quad(M,P(x0,y0,z1),P(x1,y0,z1),P(x1,y1,z1),P(x0,y1,z1),cor); quad(M,P(x1,y0,z0),P(x0,y0,z0),P(x0,y1,z0),P(x1,y1,z0),cor);
+  quad(M,P(x1,y0,z1),P(x1,y0,z0),P(x1,y1,z0),P(x1,y1,z1),cor); quad(M,P(x0,y0,z0),P(x0,y0,z1),P(x0,y1,z1),P(x0,y1,z0),cor);
+  quad(M,P(x0,y1,z1),P(x1,y1,z1),P(x1,y1,z0),P(x0,y1,z0),cor); if(!semFundo) quad(M,P(x0,y0,z0),P(x1,y0,z0),P(x1,y0,z1),P(x0,y0,z1),cor);
+}
+function copa(M,cx,cy,cz,rx,ry,rz,c0,c1,semente){ // icosfera subdividida e irregular, mais escura embaixo
+  const t=(1+Math.sqrt(5))/2; let V=[[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]].map(v=>{ const l=Math.hypot(...v); return v.map(q=>q/l); });
+  let F=[[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
+  const meio={}; const mid=(a,b)=>{ const k=a<b?a+'_'+b:b+'_'+a; if(meio[k]!==undefined) return meio[k]; const v=[(V[a][0]+V[b][0])/2,(V[a][1]+V[b][1])/2,(V[a][2]+V[b][2])/2]; const l=Math.hypot(...v); V.push(v.map(q=>q/l)); return meio[k]=V.length-1; };
+  if(LOD) F=F.flatMap(([a,b,c])=>{ const ab=mid(a,b),bc=mid(b,c),ca=mid(c,a); return [[a,ab,ca],[b,bc,ab],[c,ca,bc],[ab,bc,ca]]; });
+  const o=M.p.length/3;
+  V.forEach((v,k)=>{ const dsp=1+0.22*(hash(k*7+semente*131,semente*17+3)-0.5)+0.12*Math.sin(v[0]*5+semente)*Math.cos(v[2]*4); const fl=v[1]<-0.2?0.82:1;
+    M.p.push(cx+v[0]*rx*dsp, cy+v[1]*ry*dsp*fl, cz+v[2]*rz*dsp);
+    let nn=[v[0]/rx,v[1]/ry,v[2]/rz]; const l=Math.hypot(...nn); M.n.push(nn[0]/l,nn[1]/l,nn[2]/l);
+    const s=ss(-0.9,0.9,v[1])*0.85+0.15*hash(k,semente); const c=lerp3(c0,c1,s); M.c.push(c[0],c[1],c[2]); });
+  F.forEach(f=>M.i.push(o+f[0],o+f[2],o+f[1]));
+}
+function fazArvore(){ const M=Obj(); prisma(M,[0,-0.15,0],[0,1.05,0],0.13,hex('#3b2c1e'),LOD?5:3); copa(M,0,1.5,0,1,0.86,1,hex('#2f4a1c'),hex('#7d9c45'),3); copa(M,0.35,1.95,-0.15,0.62,0.55,0.62,hex('#3a5822'),hex('#93ae52'),7); return M; }
+function fazEuca(){ const M=Obj(); prisma(M,[0,-0.1,0],[0,2.4,0],0.09,hex('#8f8466'),LOD?5:3); copa(M,0,3.0,0,0.62,1.55,0.62,hex('#3a5244'),hex('#8fa98a'),11); return M; }
+function fazCasa(){ const M=Obj(), parede=hex('#e9e3cf'), telha=hex('#9b4a2c'), telha2=hex('#7e3b23');
+  caixa(M,-1,0,-0.62,1,0.78,0.62,parede,true);
+  quad(M,[-1.12,0.74,-0.74],[1.12,0.74,-0.74],[1.12,1.3,0],[-1.12,1.3,0],telha2); quad(M,[1.12,0.74,0.74],[-1.12,0.74,0.74],[-1.12,1.3,0],[1.12,1.3,0],telha);
+  tri(M,[1,0.78,-0.62],[1,0.78,0.62],[1,1.24,0],parede,[1,0,0]); tri(M,[-1,0.78,0.62],[-1,0.78,-0.62],[-1,1.24,0],parede,[-1,0,0]);
+  caixa(M,-0.2,0,0.62,0.2,0.52,0.64,hex('#5a3a24'),true); caixa(M,0.45,0.34,0.62,0.78,0.6,0.64,hex('#2b3a3e'),true); caixa(M,-0.78,0.34,0.62,-0.45,0.6,0.64,hex('#2b3a3e'),true);
+  return M; }
+function fazGalpao(){ const M=Obj(), metal=hex('#a9aea6'), metal2=hex('#8d928b'), col=hex('#6d6a5c');
+  [-1,-0.33,0.33,1].forEach(x=>{ prisma(M,[x,0,-0.7],[x,0.7,-0.7],0.04,col,4); prisma(M,[x,0,0.7],[x,0.7,0.7],0.04,col,4); });
+  quad(M,[-1.1,0.7,-0.8],[1.1,0.7,-0.8],[1.1,0.95,0],[-1.1,0.95,0],metal2); quad(M,[1.1,0.7,0.8],[-1.1,0.7,0.8],[-1.1,0.95,0],[1.1,0.95,0],metal);
+  return M; }
+function fazMarco(){ const M=Obj(); caixa(M,-0.5,-0.4,-0.5,0.5,0.9,0.5,hex('#c9c6b8')); caixa(M,-0.3,0.9,-0.3,0.3,1.02,0.3,hex('#D9E15A')); return M; }
+function fazTripe(){ const M=Obj(), amarelo=hex('#d6a823'), cinza=hex('#2f3233'), metal=hex('#b8bcb8'), laranja=hex('#e3661c');
+  const topo=[0,2.15,0]; for(let k=0;k<3;k++){ const a=k/3*Math.PI*2+0.4; prisma(M,[Math.cos(a)*0.95,0,Math.sin(a)*0.95],[Math.cos(a)*0.12,2.1,Math.sin(a)*0.12],0.045,amarelo,4); }
+  prisma(M,[0,2.05,0],[0,2.22,0],0.2,cinza,8); prisma(M,[0,2.22,0],[0,2.95,0],0.035,metal,6);
+  prisma(M,[0,2.95,0],[0,3.18,0],0.34,hex('#d9dad3'),12); prisma(M,[0,3.18,0],[0,3.3,0],0.3,laranja,12);
+  copa(M,0,3.3,0,0.24,0.08,0.24,laranja,hex('#f08a3c'),5); void topo; return M; }
+
+/* Posições das instâncias (determinísticas) */
+function semeia(){
+  const arv=[], euc=[], esp=CEL?0.24:0.19;
+  for(let gz=-TAM/2+0.1; gz<TAM/2-0.1; gz+=esp) for(let gx=-TAM/2+0.1; gx<TAM/2-0.1; gx+=esp){
+    const ix=Math.round(gx*100), iz=Math.round(gz*100);
+    const x=gx+(hash(ix,iz)-0.5)*esp*0.9, z=gz+(hash(iz+7,ix+3)-0.5)*esp*0.9;
+    const b=bio(x,z); const pr=b[0]*0.95-0.05+(dentro(x,z)?0.04:0);
+    if(hash(ix+11,iz-5)<pr) arv.push([x,altura(x,z),z, 0.085+0.07*hash(ix-3,iz+9), hash(ix+1,iz+1)]);
+    else if(b[0]<0.2 && b[1]<0.2 && b[2]<0.5 && hash(ix+31,iz+17)<0.012 && dLinha(x,z,ESTRADA)>0.25 && dAcude(x,z)>1.15) arv.push([x,altura(x,z),z, 0.10+0.06*hash(ix,iz), hash(ix+2,iz)]); // árvores isoladas no pasto
+  }
+  const c=Math.cos(EUCA.ang), s=Math.sin(EUCA.ang), pe=CEL?0.15:0.12;
+  for(let u=-EUCA.hx+0.08; u<=EUCA.hx-0.06; u+=pe) for(let v=-EUCA.hz+0.08; v<=EUCA.hz-0.06; v+=pe){
+    const x=EUCA.cx+u*c+v*s, z=EUCA.cz-u*s+v*c, k=Math.round(u*97+v*31);
+    if(hash(k,7)<0.06) continue; euc.push([x,altura(x,z),z, 0.062+0.012*hash(k,3), hash(k,9)]);
+  }
+  const casas=[[SEDE[0],altura(...SEDE),SEDE[1],0.075,0.62],[SEDE[0]+0.33,altura(SEDE[0]+0.33,SEDE[1]-0.25),SEDE[1]-0.25,0.085,0.6]];
+  const marcos=POLI.map(v=>[v[0],altura(v[0],v[1]),v[1],0.042,0]);
+  return {arv,euc,casas,marcos};
 }
 
 /* ================= WebGL ================= */
 const cv=$('#terreno');
 const gl=cv.getContext('webgl2',{antialias:true,alpha:false,powerPreference:'high-performance'});
 const VS=`#version 300 es
-in vec3 aPos; in vec3 aNor; uniform mat4 uVP; uniform float uRise;
-out vec3 vW; out vec3 vN; out float vH;
-void main(){ vec3 p=aPos; p.y*=uRise; vW=p; vN=aNor; vH=aPos.y; gl_Position=uVP*vec4(p,1.0); }`;
-const FS=`#version 300 es
+in vec3 aPos; in vec3 aNor; in vec4 aBio; in float aAO; uniform mat4 uVP; uniform float uRise;
+out vec3 vW; out vec3 vN; out float vH; out vec4 vB; out float vAO;
+void main(){ vec3 p=aPos; p.y*=uRise; vW=p; vN=aNor; vH=aPos.y; vB=aBio; vAO=aAO; gl_Position=uVP*vec4(p,1.0); }`;
+const FS=(CEL?'#define LQ\n':'')+`
 precision highp float;
-in vec3 vW; in vec3 vN; in float vH;
-uniform vec3 uEye; uniform float uContour,uPts,uReveal,uFill,uTime,uHmax;
-uniform vec2 uPoly[6];
-uniform vec3 cLow,cMid,cHigh,cFog,cLima,cCreme;
+in vec3 vW; in vec3 vN; in float vH; in vec4 vB; in float vAO;
+uniform vec3 uEye; uniform float uContour,uPts,uReveal,uFill,uTime,uHmax,uBake,uFogK;
+uniform vec2 uPoly[6]; uniform vec2 uRoad[25]; uniform vec2 uTrack[10]; uniform vec2 uRio[25]; uniform vec4 uAcude; uniform vec2 uSede;
+uniform vec3 cLow,cFog,cLima,cCreme;
 out vec4 o;
+float h21(vec2 p){ p=fract(p*vec2(123.34,456.21)); p+=dot(p,p+45.32); return fract(p.x*p.y); }
+float vn(vec2 p){ vec2 i=floor(p), f=fract(p); vec2 u=f*f*(3.-2.*f); return mix(mix(h21(i),h21(i+vec2(1,0)),u.x),mix(h21(i+vec2(0,1)),h21(i+vec2(1,1)),u.x),u.y); }
+float fb(vec2 p){ float s=0.,a=.5; for(int i=0;i<4;i++){ s+=a*vn(p); p=p*2.03+vec2(17.1,3.7); a*=.5; } return s; }
+float sd(vec2 p, vec2 a, vec2 b){ vec2 pa=p-a, ba=b-a; float t=clamp(dot(pa,ba)/dot(ba,ba),0.,1.); return length(pa-ba*t); }
 float segD(vec2 p, vec2 a, vec2 b, out float t){ vec2 pa=p-a, ba=b-a; t=clamp(dot(pa,ba)/dot(ba,ba),0.,1.); return length(pa-ba*t); }
 void main(){
-  vec3 n=normalize(vN); float h=clamp(vH/uHmax,0.,1.);
-  vec3 base=mix(cLow,cMid,smoothstep(0.,.42,h)); base=mix(base,cHigh,smoothstep(.42,1.,h));
-  vec3 L=normalize(vec3(-.55,.75,.35)); float dif=max(dot(n,L),0.); float hemi=.55+.45*n.y;
-  vec3 col=base*(.32+.85*dif)*(.75+.25*hemi);
+  vec2 p=vW.xz; vec3 n0=normalize(vN);
+  float px=length(fwidth(p))+1e-5;
+  float det=1.-clamp((px-.012)*22.,0.,1.);          // detalhe fino some com a distância (sem serrilhado)
+  float det2=1.-clamp((px-.004)*60.,0.,1.);
+  float slope=1.-n0.y;
+  float nA=fb(p*1.1), nB=vn(p*6.3+2.), nC=vn(p*27.), nD=vn(p*83.+5.);
+  #ifdef LQ
+  nD=.5;
+  #endif
+  float mata=smoothstep(0.,1.,vB.x), cafe=vB.y, euca=vB.z, varz=vB.w;
+  /* pasto de braquiária: manchas secas e verdes, terracetes de pisoteio nas encostas */
+  vec3 pasto=mix(vec3(.30,.36,.15),vec3(.47,.45,.22),smoothstep(.32,.78,nA));
+  pasto=mix(pasto,vec3(.22,.32,.12),smoothstep(.5,.85,nB)*.55);
+  pasto=mix(pasto,vec3(.20,.33,.13),varz*.7);
+  pasto*=.86+.24*mix(.5,nC,det)+.10*mix(0.,nD-.5,det2);
+  float terr=smoothstep(.22,.55,slope)*det*smoothstep(.2,.8,sin(vH*95.+nB*7.));
+  pasto*=1.-terr*.16;
+  float bump=(nC*.5+nD*.5*det2)*.006*det;
+  /* solo exposto (latossolo vermelho-amarelo) em barrancos e erosões */
+  vec3 terra=mix(vec3(.44,.25,.13),vec3(.62,.42,.25),nC);
+  float solo=smoothstep(.5,.72,slope+(nB-.5)*.35)*(1.-mata)*(1.-cafe);
+  vec3 col=mix(pasto,terra,solo*.85);
+  /* cafezal em curva de nível */
+  float r=fract(vH*15.+nA*.4); float lin=smoothstep(.12,.3,r)*(1.-smoothstep(.58,.76,r));
+  float falha=step(.18,vn(vec2((p.x+p.y)*22.,floor(vH*15.+nA*.4))));
+  float planta=lin*falha;
+  vec3 cc=mix(vec3(.42,.29,.17),vec3(.11,.22,.09)*(.8+.4*nC),planta);
+  cc=mix(vec3(.21,.25,.12),cc,det);
+  col=mix(col,cc,cafe); bump+=planta*cafe*.012*det;
+  /* chão do eucaliptal: serrapilheira */
+  col=mix(col,mix(vec3(.24,.21,.13),vec3(.33,.30,.18),nC),euca);
+  /* mata atlântica vista de cima: copas aglomeradas */
+  float cop=vn(p*13.+3.)*.55+vn(p*31.+9.)*.3+nD*.15;
+  vec3 mc=mix(vec3(.07,.14,.06),vec3(.19,.29,.11),smoothstep(.25,.85,cop));
+  mc=mix(mc,vec3(.30,.36,.15),smoothstep(.82,.97,cop)*.5);
+  mc=mix(mc,vec3(.36,.28,.12),step(.93,vn(p*4.+1.))*smoothstep(.6,.9,cop)*.6);   // ipês/árvores secas pontuais
+  col=mix(col,mc,mata); bump+=mata*cop*.028*det;
+  /* estrada de terra, carreador e terreiro da sede */
+  float de=1e3; for(int i=0;i<24;i++) de=min(de,sd(p,uRoad[i],uRoad[i+1]));
+  float dt=1e3; for(int i=0;i<9;i++) dt=min(dt,sd(p,uTrack[i],uTrack[i+1]));
+  float dsd=length(p-uSede);
+  vec3 chao=mix(vec3(.55,.39,.24),vec3(.70,.55,.37),nC*.6+nD*.4);
+  float acost=1.-smoothstep(.09,.16+px,de);
+  col=mix(col,col*.7+vec3(.05,.025,0.),acost*.55*(1.-mata));
+  float rodo=abs(de-.03)<.009?1.:0.;
+  vec3 chaoE=chao*(1.-rodo*.18*det);
+  col=mix(col,chaoE,1.-smoothstep(.068,.068+px*1.6,de));
+  col=mix(col,chao*.92,1.-smoothstep(.026,.026+px*1.6,dt));
+  col=mix(col,chao*.95,(1.-smoothstep(.16,.26,dsd+(nB-.5)*.08)));
+  bump-=(1.-smoothstep(.06,.1,de))*.01;
+  /* córrego e açude */
+  float dr=1e3; for(int i=0;i<24;i++) dr=min(dr,sd(p,uRio[i],uRio[i+1]));
+  float rw=.022+.012*nB;
+  float agua=1.-smoothstep(rw,rw+px*1.6,dr);
+  float ea=length((p-uAcude.xy)/uAcude.zw)+(vn(p*5.)-.5)*.16;
+  agua=max(agua,1.-smoothstep(1.-px*2./uAcude.w,1.,ea));
+  float marg=(1.-smoothstep(1.,1.12,ea))*(1.-agua);
+  col=mix(col,vec3(.36,.30,.17),marg*.7);
+  /* relevo fino (bump) */
+  vec3 dpdx=dFdx(vW), dpdy=dFdy(vW); float bx=dFdx(bump), by=dFdy(bump);
+  vec3 r1=cross(dpdy,n0), r2=cross(n0,dpdx); float dd=dot(dpdx,r1);
+  vec3 n=normalize(abs(dd)*n0-sign(dd)*(bx*r1+by*r2));
+  if(dot(n,n)<.5) n=n0;
+  /* luz de fim de tarde */
+  vec3 L=normalize(vec3(-.55,.75,.35)); float dif=max(dot(n,L),0.); float hemi=.5+.5*n.y;
+  vec3 luz=uBake>.5 ? vec3(.66)+vec3(.42)*dif : vec3(1.,.93,.80)*dif*1.12+vec3(.36,.43,.40)*hemi*.62;
+  col*=luz*vAO;
+  if(agua>0.){
+    vec3 V=normalize(uEye-vW); float fres=pow(1.-max(V.y,0.),4.);
+    float ond=vn(p*40.+uTime*.6)*.5+vn(p*90.-uTime*.4)*.5;
+    vec3 Rf=reflect(-V,normalize(vec3((ond-.5)*.12,1.,(vn(p*55.)-.5)*.12)));
+    vec3 wc=mix(vec3(.05,.09,.08),vec3(.26,.32,.28),fres*.85)+pow(max(dot(Rf,L),0.),70.)*vec3(1.,.9,.7)*.9;
+    if(uBake>.5) wc=mix(vec3(.10,.17,.16),vec3(.16,.24,.22),ond);
+    col=mix(col,wc,agua);
+  }
+  /* curvas de nível e perímetro (camada técnica) */
   float cf=vH*4.0; float w=max(fwidth(cf),1e-4); float d=abs(fract(cf-.5)-.5)/w; float line=1.-smoothstep(.6,1.6,d);
   float major=step(4.5, mod(floor(cf+.5),5.));
-  col=mix(col,cLima,line*uContour*(.22+.45*major));
-  vec2 p=vW.xz; float px=fwidth(p.x)+fwidth(p.y);
+  col=mix(col,cLima,line*uContour*(.26+.5*major));
   bool inside=false;
   for(int i=0,j=5;i<6;j=i++){ vec2 a=uPoly[i], b=uPoly[j]; if(((a.y>p.y)!=(b.y>p.y)) && (p.x<(b.x-a.x)*(p.y-a.y)/(b.y-a.y)+a.x)) inside=!inside; }
-  if(inside) col=mix(col,cLima,.20*uFill);
+  if(inside) col=mix(col,cLima,.16*uFill);
   float edge=1e3;
-  for(int i=0;i<6;i++){ vec2 a=uPoly[i]; vec2 b=uPoly[(i+1)%6]; float t; float dd=segD(p,a,b,t); if(float(i)+t<=uReveal*6.) edge=min(edge,dd); }
-  float ew=.05+px*.6; col=mix(col,cLima,1.-smoothstep(ew,ew+px*1.5,edge));
+  for(int i=0;i<6;i++){ vec2 a=uPoly[i]; vec2 b=uPoly[(i+1)%6]; float t; float dd2=segD(p,a,b,t); if(float(i)+t<=uReveal*6.) edge=min(edge,dd2); }
+  float ew=.045+px*.6; col=mix(col,cLima,1.-smoothstep(ew,ew+px*1.5,edge));
   for(int i=0;i<6;i++){
     float on=clamp(uPts-float(i),0.,1.); if(on<=0.) continue;
-    float dd=length(p-uPoly[i]); float r=.15*on;
-    col=mix(col,cCreme,1.-smoothstep(r,r+px*1.5,dd));
-    col=mix(col,cLow,1.-smoothstep(r*.45,r*.45+px*1.5,dd));
-    float ph=fract(uTime*.55+float(i)*.17); float rr=.18+ph*.8;
-    float ring=1.-smoothstep(0.,px*1.5+.025,abs(dd-rr));
-    col=mix(col,cLima,ring*(1.-ph)*.85*on*(1.-uFill*.7));
+    float dv=length(p-uPoly[i]); float rr0=.15*on;
+    col=mix(col,cCreme,(1.-smoothstep(rr0,rr0+px*1.5,dv))*(1.-smoothstep(rr0*.62,rr0*.62+px*1.5,dv))*.9);
+    if(uBake<.5){ float ph=fract(uTime*.55+float(i)*.17); float rr=.18+ph*.8;
+      float ring=1.-smoothstep(0.,px*1.5+.025,abs(dv-rr));
+      col=mix(col,cLima,ring*(1.-ph)*.85*on*(1.-uFill*.7)); }
   }
-  float dist=length(vW-uEye); col=mix(col,cFog,smoothstep(9.,25.,dist));
+  if(uBake<.5){ float dist=length(vW-uEye)/uFogK; col=mix(col,cFog,smoothstep(9.,25.,dist)); }
   o=vec4(col,1.);
 }`;
+const VSO=`#version 300 es
+in vec3 aP; in vec3 aN; in vec3 aC; in vec4 iP; in vec2 iV;
+uniform mat4 uVP; uniform float uRise, uPts, uModo;
+out vec3 vW; out vec3 vN; out vec3 vC;
+void main(){
+  float g=1.; if(uModo>.5) g=clamp((uPts-iV.y)*1.6,0.,1.);
+  float a=iV.x*6.2832, c=cos(a), s=sin(a);
+  vec3 q=aP*iP.w*(.25+.75*uRise)*g; q=vec3(c*q.x-s*q.z,q.y,s*q.x+c*q.z);
+  vec3 p=vec3(iP.x,iP.y*uRise,iP.z)+q;
+  vN=vec3(c*aN.x-s*aN.z,aN.y,s*aN.x+c*aN.z); vW=p; vC=aC*(.82+.36*fract(iV.x*7.13));
+  gl_Position=uVP*vec4(p,1.); if(g<=0.) gl_Position=vec4(2.,2.,2.,1.);
+}`;
+const FSO=`#version 300 es
+precision highp float;
+in vec3 vW; in vec3 vN; in vec3 vC; uniform vec3 uEye; uniform vec3 cFog; uniform float uFogK; out vec4 o;
+void main(){ vec3 n=normalize(vN); if(!gl_FrontFacing) n=-n; vec3 L=normalize(vec3(-.55,.75,.35));
+  float dif=max(dot(n,L),0.); float hemi=.5+.5*n.y; vec3 V=normalize(uEye-vW);
+  float wrap=max(dot(n,L)*.6+.4,0.);
+  vec3 col=vC*(vec3(1.,.94,.82)*mix(dif,wrap,.35)*1.15+vec3(.42,.50,.46)*(.45+.55*hemi)*.75)+vec3(.9,.95,.6)*pow(max(dot(reflect(-L,n),V),0.),24.)*.05;
+  col=pow(col,vec3(.92));
+  col=mix(col,cFog,smoothstep(9.,25.,length(vW-uEye)/uFogK)); o=vec4(col,1.); }`;
 function shader(t,src){ const s=gl.createShader(t); gl.shaderSource(s,src); gl.compileShader(s); if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }
+function programa(vs,fs){ const p=gl.createProgram(); gl.attachShader(p,shader(gl.VERTEX_SHADER,vs)); gl.attachShader(p,shader(gl.FRAGMENT_SHADER,fs.startsWith('#version')?fs:'#version 300 es\n'+fs)); gl.linkProgram(p); if(!gl.getProgramParameter(p,gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p)); return p; }
 
 /* Matrizes */
 function persp(f,a,n,fa){ const t=1/Math.tan(f/2), nf=1/(n-fa); return [t/a,0,0,0, 0,t,0,0, 0,0,(fa+n)*nf,-1, 0,0,2*fa*n*nf,0]; }
@@ -833,7 +1056,6 @@ function olhar(e,c,u){ let z=[e[0]-c[0],e[1]-c[1],e[2]-c[2]]; let l=Math.hypot(.
   const y=[z[1]*x[2]-z[2]*x[1],z[2]*x[0]-z[0]*x[2],z[0]*x[1]-z[1]*x[0]];
   return [x[0],y[0],z[0],0, x[1],y[1],z[1],0, x[2],y[2],z[2],0, -(x[0]*e[0]+x[1]*e[1]+x[2]*e[2]),-(y[0]*e[0]+y[1]*e[1]+y[2]*e[2]),-(z[0]*e[0]+z[1]*e[1]+z[2]*e[2]),1]; }
 function mult(a,b){ const o=new Array(16); for(let i=0;i<4;i++) for(let j=0;j<4;j++){ let s=0; for(let k=0;k<4;k++) s+=a[k*4+j]*b[i*4+k]; o[i*4+j]=s; } return o; }
-const hex=(h)=>[parseInt(h.slice(1,3),16)/255,parseInt(h.slice(3,5),16)/255,parseInt(h.slice(5,7),16)/255];
 
 /* Câmera por capítulo: [olho, alvo] */
 const CAM=[
@@ -844,7 +1066,6 @@ const CAM=[
   [[6.2,5.4,7.6],[0.3,0.5,0]]
 ];
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-const lerp=(a,b,t)=>a+(b-a)*t; const lerp3=(a,b,t)=>[lerp(a[0],b[0],t),lerp(a[1],b[1],t),lerp(a[2],b[2],t)];
 const faixa=(p,a,b)=>Math.min(Math.max((p-a)/(b-a),0),1);
 
 const hcPts=$('#hcPts'), hcBar=$('#hcBar'), hcPer=$('#hcPer'), hcEt=[...document.querySelectorAll('#hcEtapas li[data-p]')];
@@ -856,28 +1077,54 @@ function sincroniza(p){
   hcPts.textContent=n; hcBar.style.width=(n/6*100)+'%'; hcPer.textContent=per+'%';
   hcEt.forEach(li=>li.classList.toggle('ok',p>=parseFloat(li.dataset.p)));
 }
-let prog=0, progSuave=0, mouse=[0,0], mouseS=[0,0], visivel=true, tAnt=0;
+let menuAberto=false, prog=0, progSuave=0, mouse=[0,0], mouseS=[0,0], visivel=true, tAnt=0;
 const historia=$('#historia'), pontos=document.querySelectorAll('.trilho i');
 function lerProgresso(){ const r=historia.getBoundingClientRect(), h=r.height-innerHeight; prog=Math.min(Math.max(-r.top/Math.max(h,1),0),1)*4; }
 
+let SEM=null;                 // instâncias, compartilhadas com o modelo de RA
+let assaTextura=null;         // gera a foto aérea do terreno (para o modelo de RA)
+const MOLDES={arvore:fazArvore, euca:fazEuca, casa:fazCasa, galpao:fazGalpao, marco:fazMarco, tripe:fazTripe};
+const cacheMolde={}; const molde=(k)=>cacheMolde[k]||(cacheMolde[k]=MOLDES[k]());
+const cacheLeve={}; const moldeLeve=(k)=>{ if(!cacheLeve[k]){ LOD=0; cacheLeve[k]=MOLDES[k](); LOD=1; } return cacheLeve[k]; };
+
 if(gl){
   try{
-    const prog_=gl.createProgram(); gl.attachShader(prog_,shader(gl.VERTEX_SHADER,VS)); gl.attachShader(prog_,shader(gl.FRAGMENT_SHADER,FS)); gl.linkProgram(prog_);
-    if(!gl.getProgramParameter(prog_,gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog_));
+    const prog_=programa(VS,FS);
     marca('gl');
-    const N = innerWidth<720 ? 130 : 200;
+    const N = CEL ? 140 : 210;
     const M=malha(N); marca('terreno');
     const vao=gl.createVertexArray(); gl.bindVertexArray(vao);
-    const buf=(data,loc)=>{ const b=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,b); gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,3,gl.FLOAT,false,0,0); };
-    buf(M.pos,gl.getAttribLocation(prog_,'aPos')); buf(M.nor,gl.getAttribLocation(prog_,'aNor'));
+    const buf=(data,loc,sz)=>{ const b=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,b); gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW); if(loc<0) return; gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,sz,gl.FLOAT,false,0,0); };
+    buf(M.pos,gl.getAttribLocation(prog_,'aPos'),3); buf(M.nor,gl.getAttribLocation(prog_,'aNor'),3); buf(M.bi,gl.getAttribLocation(prog_,'aBio'),4); buf(M.ao,gl.getAttribLocation(prog_,'aAO'),1);
     const ib=gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,M.idx,gl.STATIC_DRAW);
     gl.useProgram(prog_);
-    const U={}; ['uVP','uRise','uEye','uContour','uPts','uReveal','uFill','uTime','uHmax','uPoly','cLow','cMid','cHigh','cFog','cLima','cCreme'].forEach(n=>U[n]=gl.getUniformLocation(prog_,n));
-    gl.uniform2fv(U.uPoly,new Float32Array(POLI.flat())); gl.uniform1f(U.uHmax,HMAX);
-    gl.uniform3fv(U.cLow,hex('#232812')); gl.uniform3fv(U.cMid,hex('#5C6B3D')); gl.uniform3fv(U.cHigh,hex('#B9C08E'));
-    gl.uniform3fv(U.cFog,hex('#14170A')); gl.uniform3fv(U.cLima,hex('#D9E15A')); gl.uniform3fv(U.cCreme,hex('#F7F7DC'));
+    const U={}; ['uVP','uRise','uEye','uContour','uPts','uReveal','uFill','uTime','uHmax','uBake','uFogK','uPoly','uRoad','uTrack','uRio','uAcude','uSede','cLow','cFog','cLima','cCreme'].forEach(n=>U[n]=gl.getUniformLocation(prog_,n));
+    gl.uniform2fv(U.uPoly,new Float32Array(POLI.flat())); gl.uniform1f(U.uHmax,HMAX); gl.uniform1f(U.uBake,0); gl.uniform1f(U.uFogK,1);
+    gl.uniform2fv(U.uRoad,new Float32Array(ESTRADA.flat())); gl.uniform2fv(U.uTrack,new Float32Array(CARREADOR.flat())); gl.uniform2fv(U.uRio,new Float32Array(RIO.flat()));
+    gl.uniform4fv(U.uAcude,ACUDE); gl.uniform2fv(U.uSede,SEDE);
+    gl.uniform3fv(U.cLow,hex('#232812')); gl.uniform3fv(U.cFog,hex('#14170A')); gl.uniform3fv(U.cLima,hex('#D9E15A')); gl.uniform3fv(U.cCreme,hex('#F7F7DC'));
     gl.enable(gl.DEPTH_TEST); gl.clearColor(0.078,0.09,0.039,1);
     $('.palco .fallback').style.visibility='hidden';
+
+    /* Objetos instanciados */
+    const progO=programa(VSO,FSO);
+    const UO={}; ['uVP','uRise','uPts','uModo','uEye','cFog','uFogK'].forEach(n=>UO[n]=gl.getUniformLocation(progO,n));
+    SEM=semeia();
+    const grupos=[];
+    function grupo(nome,inst,modo,idxs){
+      if(!inst.length) return; const G=molde(nome), va=gl.createVertexArray(); gl.bindVertexArray(va);
+      const at=(arr,loc,sz,div)=>{ const b=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,b); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(arr),gl.STATIC_DRAW); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,sz,gl.FLOAT,false,0,0); if(div) gl.vertexAttribDivisor(loc,1); };
+      at(G.p,gl.getAttribLocation(progO,'aP'),3); at(G.n,gl.getAttribLocation(progO,'aN'),3); at(G.c,gl.getAttribLocation(progO,'aC'),3);
+      at(inst.flatMap(q=>[q[0],q[1],q[2],q[3]]),gl.getAttribLocation(progO,'iP'),4,1);
+      at(inst.map((q,k)=>[q[4],idxs?idxs[k]:0]).flat(),gl.getAttribLocation(progO,'iV'),2,1);
+      const b=gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,b); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(G.i),gl.STATIC_DRAW);
+      grupos.push({va,n:G.i.length,k:inst.length,modo});
+    }
+    grupo('arvore',SEM.arv,0); grupo('euca',SEM.euc,0);
+    grupo('casa',[SEM.casas[0]],0); grupo('galpao',[SEM.casas[1]],0);
+    grupo('marco',SEM.marcos,1,POLI.map((_,i)=>i));
+    const v0=POLI[0]; grupo('tripe',[[v0[0],altura(v0[0],v0[1]),v0[1],0.1,0.15]],1,[0]);
+    gl.bindVertexArray(vao);
 
     /* Palavra SAOTECH dentro da cena, atrás da serra */
     const VS2=`#version 300 es
@@ -886,7 +1133,7 @@ void main(){ vec3 p=uCen+uDir*(aC.x*uTam.x)+vec3(0.,aC.y*uTam.y,0.); vW=p; vUV=v
     const FS2=`#version 300 es
 precision highp float; in vec2 vUV; in vec3 vW; uniform sampler2D uTex; uniform float uA; uniform vec3 uEye; out vec4 o;
 void main(){ vec4 t=texture(uTex,vUV); float f=smoothstep(16.,36.,length(vW-uEye)); o=vec4(t.rgb, t.a*uA*(1.-f*.55)); }`;
-    const prog2=gl.createProgram(); gl.attachShader(prog2,shader(gl.VERTEX_SHADER,VS2)); gl.attachShader(prog2,shader(gl.FRAGMENT_SHADER,FS2)); gl.linkProgram(prog2);
+    const prog2=programa(VS2,FS2);
     const vao2=gl.createVertexArray(); gl.bindVertexArray(vao2);
     const qb=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,qb); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-.5,-.5, .5,-.5, -.5,.5, .5,.5]),gl.STATIC_DRAW);
     const aC=gl.getAttribLocation(prog2,'aC'); gl.enableVertexAttribArray(aC); gl.vertexAttribPointer(aC,2,gl.FLOAT,false,0,0);
@@ -911,10 +1158,29 @@ void main(){ vec4 t=texture(uTex,vUV); float f=smoothstep(16.,36.,length(vW-uEye
     Promise.race([fontePronta, new Promise(r=>setTimeout(r,2500))]).then(desenhaPalavra);
     const ALT_PAL=2.35, DIST_PAL=9.5;
 
-    const dpr=Math.min(devicePixelRatio||1, innerWidth<720?1.5:1.75);
+    const dpr=Math.min(devicePixelRatio||1, CEL?1.5:1.75);
     function tam(){ const w=cv.clientWidth, h=cv.clientHeight; cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); gl.viewport(0,0,cv.width,cv.height); }
     tam(); addEventListener('resize',tam);
     addEventListener('pointermove',e=>{ if(e.pointerType==='mouse'){ mouse=[e.clientX/innerWidth-.5, e.clientY/innerHeight-.5]; } },{passive:true});
+
+    /* Foto aérea do terreno renderizada de cima: vira a textura do modelo de RA */
+    assaTextura=function(R){
+      const fb=gl.createFramebuffer(), tx=gl.createTexture(), rb=gl.createRenderbuffer();
+      gl.bindTexture(gl.TEXTURE_2D,tx); gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA8,R,R,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
+      gl.bindRenderbuffer(gl.RENDERBUFFER,rb); gl.renderbufferStorage(gl.RENDERBUFFER,gl.DEPTH_COMPONENT24,R,R);
+      gl.bindFramebuffer(gl.FRAMEBUFFER,fb); gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,tx,0); gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,rb);
+      gl.viewport(0,0,R,R); gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+      const H=HMAX+2, VPo=[2/TAM,0,0,0, 0,0,-2/H,0, 0,2/TAM,0,0, 0,0,1-1/H,1];
+      gl.useProgram(prog_); gl.bindVertexArray(vao);
+      gl.uniformMatrix4fv(U.uVP,false,new Float32Array(VPo)); gl.uniform1f(U.uRise,1); gl.uniform1f(U.uBake,1); gl.uniform3fv(U.uEye,[0,30,0]);
+      gl.uniform1f(U.uContour,0.85); gl.uniform1f(U.uPts,6); gl.uniform1f(U.uReveal,1); gl.uniform1f(U.uFill,1); gl.uniform1f(U.uTime,0);
+      gl.drawElements(gl.TRIANGLES,M.idx.length,gl.UNSIGNED_INT,0);
+      const px=new Uint8Array(R*R*4); gl.readPixels(0,0,R,R,gl.RGBA,gl.UNSIGNED_BYTE,px);
+      gl.bindFramebuffer(gl.FRAMEBUFFER,null); gl.deleteFramebuffer(fb); gl.deleteTexture(tx); gl.deleteRenderbuffer(rb);
+      gl.uniform1f(U.uBake,0); gl.clearColor(0.078,0.09,0.039,1); gl.viewport(0,0,cv.width,cv.height); liga();
+      return px;
+    };
+
     const t0=performance.now(); let primeiro=true, rodando=false;
     function liga(){ if(!rodando){ rodando=true; requestAnimationFrame(quadro); } }
     new IntersectionObserver(es=>{ visivel=es[0].isIntersecting; if(visivel) liga(); },{rootMargin:'100px'}).observe($('#palco'));
@@ -931,18 +1197,23 @@ void main(){ vec4 t=texture(uTex,vUV); float f=smoothstep(16.,36.,length(vW-uEye
       const ox=olho[0]-alvo[0], oz=olho[2]-alvo[2];
       const asp=cv.width/cv.height, afast=asp<0.8?1.3:1;
       olho=[alvo[0]+(ox*ca-oz*sa)*afast, alvo[1]+(olho[1]-alvo[1])*afast-mouseS[1]*0.8, alvo[2]+(ox*sa+oz*ca)*afast];
-      const vp=mult(persp(asp<0.8?0.95:0.72,asp,0.1,70), olhar(olho,alvo,[0,1,0]));
-      gl.uniformMatrix4fv(U.uVP,false,new Float32Array(vp));
-      gl.uniform3fv(U.uEye,olho);
-      gl.uniform1f(U.uRise, reduz?1: (carga.feito? 0.15+0.85*ease(Math.min((now-carga.fim)/1700,1)) : 0.15));
+      const vp=new Float32Array(mult(persp(asp<0.8?0.95:0.72,asp,0.08,70), olhar(olho,alvo,[0,1,0])));
+      const rise = reduz?1: (carga.feito? 0.15+0.85*ease(Math.min((now-carga.fim)/1700,1)) : 0.15);
+      const pts=6*faixa(p,1.15,2);
+      gl.useProgram(prog_); gl.bindVertexArray(vao);
+      gl.uniformMatrix4fv(U.uVP,false,vp);
+      gl.uniform3fv(U.uEye,olho); gl.uniform1f(U.uFogK,afast);
+      gl.uniform1f(U.uRise, rise);
       gl.uniform1f(U.uContour, 0.45+0.55*faixa(p,0.2,1));
-      gl.uniform1f(U.uPts, 6*faixa(p,1.15,2));
+      gl.uniform1f(U.uPts, pts);
       gl.uniform1f(U.uReveal, faixa(p,2.1,2.95));
       gl.uniform1f(U.uFill, faixa(p,2.85,3.35));
       gl.uniform1f(U.uTime, t);
       gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-      gl.useProgram(prog_); gl.bindVertexArray(vao);
       gl.drawElements(gl.TRIANGLES,M.idx.length,gl.UNSIGNED_INT,0);
+      gl.useProgram(progO);
+      gl.uniformMatrix4fv(UO.uVP,false,vp); gl.uniform1f(UO.uRise,rise); gl.uniform1f(UO.uPts,pts); gl.uniform3fv(UO.uEye,olho); gl.uniform3fv(UO.cFog,hex('#14170A')); gl.uniform1f(UO.uFogK,afast);
+      for(const g of grupos){ gl.uniform1f(UO.uModo,g.modo); gl.bindVertexArray(g.va); gl.drawElementsInstanced(gl.TRIANGLES,g.n,gl.UNSIGNED_SHORT,0,g.k); }
       const aPal=1-faixa(p,0.04,0.65);
       if(texPronta && aPal>0.01){
         let hx=alvo[0]-olho[0], hz=alvo[2]-olho[2]; const hl=Math.hypot(hx,hz)||1; hx/=hl; hz/=hl;
@@ -950,7 +1221,7 @@ void main(){ vec4 t=texture(uTex,vUV); float f=smoothstep(16.,36.,length(vW-uEye
         const fov=asp<0.8?0.95:0.72, dist=Math.hypot(olho[0]-CEN[0],olho[1]-CEN[1],olho[2]-CEN[2]);
         const visW=2*dist*Math.tan(fov/2)*asp, W=Math.min(18, visW*0.9);
         gl.useProgram(prog2); gl.bindVertexArray(vao2);
-        gl.uniformMatrix4fv(U2.uVP,false,new Float32Array(vp)); gl.uniform3fv(U2.uCen,CEN); gl.uniform3f(U2.uDir,-hz,0,hx); gl.uniform2f(U2.uTam,W,W/4); gl.uniform3fv(U2.uEye,olho); gl.uniform1f(U2.uA,aPal);
+        gl.uniformMatrix4fv(U2.uVP,false,vp); gl.uniform3fv(U2.uCen,CEN); gl.uniform3f(U2.uDir,-hz,0,hx); gl.uniform2f(U2.uTam,W,W/4); gl.uniform3fv(U2.uEye,olho); gl.uniform1f(U2.uA,aPal);
         gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,tex); gl.uniform1i(U2.uTex,0);
         gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA); gl.depthMask(false);
         gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
@@ -959,11 +1230,12 @@ void main(){ vec4 t=texture(uTex,vUV); float f=smoothstep(16.,36.,length(vW-uEye
       gl.useProgram(prog_); gl.bindVertexArray(vao);
       sincroniza(p);
       if(primeiro){ primeiro=false; marca('quadro'); }
-      if(visivel && !document.hidden) requestAnimationFrame(quadro); else rodando=false;
+      if(visivel && !document.hidden && !menuAberto) requestAnimationFrame(quadro); else rodando=false;
     }
     document.addEventListener('visibilitychange',()=>{ if(!document.hidden && visivel) liga(); });
+    document.addEventListener('gaveta',e=>{ menuAberto=e.detail; if(!menuAberto && visivel) liga(); });
     liga();
-  }catch(err){ console.warn('Terreno 3D indisponível:',err); marca('gl'); marca('terreno'); marca('quadro'); }
+  }catch(err){ console.warn('Terreno 3D indisponível:',err); assaTextura=null; marca('gl'); marca('terreno'); marca('quadro'); }
 } else { marca('gl'); marca('terreno'); marca('quadro'); }
 addEventListener('scroll',()=>{ lerProgresso(); if(!gl) sincroniza(prog); },{passive:true});
 
@@ -1003,46 +1275,76 @@ let pend=false;
 addEventListener('scroll',()=>{ if(pend) return; pend=true; requestAnimationFrame(()=>{ pend=false; paralaxe(); rolaServicos(); acendeFrase(); }); },{passive:true});
 paralaxe(); acendeFrase();
 
-/* ================= Modelo 3D para RA (GLB gerado no navegador) ================= */
-function geraGLB(){
-  const N=128, n=N+1, S=0.6/TAM, BASE=-0.25;
-  const pos=[], nor=[], cor=[], idx=[];
-  const rampa=(h)=>{ const a=hex('#2B3017'),b=hex('#5C6B3D'),c=hex('#B9C08E'); const t=Math.min(Math.max(h/HMAX,0),1); return t<.42?lerp3(a,b,t/.42):lerp3(b,c,(t-.42)/.58); };
-  const dentro=(x,z)=>{ let ins=false; for(let i=0,j=5;i<6;j=i++){ const a=POLI[i],b=POLI[j]; if(((a[1]>z)!==(b[1]>z)) && (x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0])) ins=!ins; } return ins; };
-  const distBorda=(x,z)=>{ let m=1e9; for(let i=0;i<6;i++){ const a=POLI[i],b=POLI[(i+1)%6],bx=b[0]-a[0],bz=b[1]-a[1]; const t=Math.min(Math.max(((x-a[0])*bx+(z-a[1])*bz)/(bx*bx+bz*bz),0),1); m=Math.min(m,Math.hypot(x-a[0]-bx*t,z-a[1]-bz*t)); } return m; };
-  const lima=hex('#D9E15A'), creme=hex('#F7F7DC');
-  for(let j=0;j<n;j++) for(let i=0;i<n;i++){
-    const x=(i/N-.5)*TAM, z=(j/N-.5)*TAM, y=altura(x,z), e=0.05;
-    pos.push(x*S,y*S,z*S);
-    const dx=(altura(x+e,z)-altura(x-e,z))/(2*e), dz=(altura(x,z+e)-altura(x,z-e))/(2*e), l=Math.hypot(dx,1,dz); nor.push(-dx/l,1/l,-dz/l);
-    let c=rampa(y);
-    const cf=y*4, fr=Math.abs(cf-Math.round(cf)); if(fr<0.07) c=lerp3(c,lima,Math.round(cf)%5===0?.65:.35);
-    if(dentro(x,z)) c=lerp3(c,lima,.18);
-    if(distBorda(x,z)<0.07) c=lima;
-    for(const v of POLI){ if(Math.hypot(x-v[0],z-v[1])<0.16) c=creme; }
-    cor.push(Math.round(c[0]*255),Math.round(c[1]*255),Math.round(c[2]*255),255);
-  }
-  for(let j=0;j<N;j++) for(let i=0;i<N;i++){ const a=j*n+i,b=a+1,c=a+n,d=c+1; idx.push(a,c,b,b,c,d); }
-  // laterais do bloco (maquete)
-  const borda=[]; for(let i=0;i<n;i++) borda.push(i); for(let j=1;j<n;j++) borda.push(j*n+N); for(let i=N-1;i>=0;i--) borda.push(N*n+i); for(let j=N-1;j>0;j--) borda.push(j*n);
-  const lado=hex('#3A4022');
-  const base0=pos.length/3;
-  borda.forEach((v,k)=>{ const x=pos[v*3],y=pos[v*3+1],z=pos[v*3+2]; pos.push(x,y,z, x,BASE*S*TAM/2,z);
-    const l=Math.hypot(x,z)||1; nor.push(x/l,0,z/l, x/l,0,z/l);
-    cor.push(Math.round(lado[0]*255),Math.round(lado[1]*255),Math.round(lado[2]*255),255, Math.round(lado[0]*200),Math.round(lado[1]*200),Math.round(lado[2]*200),255); });
-  const B=borda.length; for(let k=0;k<B;k++){ const a=base0+k*2, b=base0+((k+1)%B)*2; idx.push(a,b,a+1, b,b+1,a+1); }
-  const P=new Float32Array(pos), Nn=new Float32Array(nor), C=new Uint8Array(cor), I=new Uint32Array(idx);
-  let mn=[1e9,1e9,1e9], mx=[-1e9,-1e9,-1e9]; for(let k=0;k<P.length;k+=3) for(let a=0;a<3;a++){ mn[a]=Math.min(mn[a],P[k+a]); mx[a]=Math.max(mx[a],P[k+a]); }
-  const al=(x)=>Math.ceil(x/4)*4;
-  const partes=[P,Nn,C,I], offs=[]; let off=0; for(const p of partes){ offs.push(off); off+=al(p.byteLength); }
-  const bin=new Uint8Array(off); partes.forEach((p,k)=>bin.set(new Uint8Array(p.buffer,p.byteOffset,p.byteLength),offs[k]));
-  const nv=P.length/3;
-  const json={asset:{version:'2.0',generator:'Saotech'},scene:0,scenes:[{nodes:[0]}],nodes:[{mesh:0,name:'Terreno'}],
-    meshes:[{primitives:[{attributes:{POSITION:0,NORMAL:1,COLOR_0:2},indices:3,material:0}]}],
-    materials:[{pbrMetallicRoughness:{baseColorFactor:[1,1,1,1],metallicFactor:0,roughnessFactor:.92},doubleSided:true}],
-    buffers:[{byteLength:bin.byteLength}],
-    bufferViews:[{buffer:0,byteOffset:offs[0],byteLength:P.byteLength,target:34962},{buffer:0,byteOffset:offs[1],byteLength:Nn.byteLength,target:34962},{buffer:0,byteOffset:offs[2],byteLength:C.byteLength,target:34962},{buffer:0,byteOffset:offs[3],byteLength:I.byteLength,target:34963}],
-    accessors:[{bufferView:0,componentType:5126,count:nv,type:'VEC3',min:mn,max:mx},{bufferView:1,componentType:5126,count:nv,type:'VEC3'},{bufferView:2,componentType:5121,normalized:true,count:nv,type:'VEC4'},{bufferView:3,componentType:5125,count:I.length,type:'SCALAR'}]};
+/* ================= Modelo 3D para RA (GLB gerado no navegador) =================
+   Maquete do terreno com foto aérea texturizada, perfil de solo nas laterais,
+   mata, eucalipto, sede, marcos de concreto e o receptor GNSS no tripé. */
+function jpegDe(px,R){
+  const c=document.createElement('canvas'); c.width=R; c.height=R; const x=c.getContext('2d');
+  const im=x.createImageData(R,R); im.data.set(px); x.putImageData(im,0,0);
+  return new Promise(res=>c.toBlob(b=>b?b.arrayBuffer().then(a=>res(new Uint8Array(a))):res(null),'image/jpeg',0.86));
+}
+async function geraGLB(){
+  const N=CEL?120:160, n=N+1, S=0.6/TAM, FUNDO=-0.85;
+  const R=CEL?1024:2048;
+  let jpg=null; if(assaTextura){ try{ jpg=await jpegDe(assaTextura(R),R); }catch(e){ jpg=null; } }
+  const prims=[];   // cada primitiva: {P,Nn,C?,UV?,I,mat}
+  /* 1. superfície do terreno */
+  { const P=[],Nn=[],UV=[],C=[],I=[];
+    const rampa=(h)=>{ const a=hex('#3a4320'),b=hex('#5C6B3D'),c=hex('#8f9661'); const t=Math.min(Math.max(h/HMAX,0),1); return t<.42?lerp3(a,b,t/.42):lerp3(b,c,(t-.42)/.58); };
+    for(let j=0;j<n;j++) for(let i=0;i<n;i++){
+      const x=(i/N-.5)*TAM, z=(j/N-.5)*TAM, y=altura(x,z), e=0.05;
+      P.push(x*S,y*S,z*S); UV.push(i/N,j/N);
+      const dx=(altura(x+e,z)-altura(x-e,z))/(2*e), dz=(altura(x,z+e)-altura(x,z-e))/(2*e), l=Math.hypot(dx,1,dz); Nn.push(-dx/l,1/l,-dz/l);
+      if(!jpg){ const c=rampa(y); C.push(c[0],c[1],c[2]); }
+    }
+    for(let j=0;j<N;j++) for(let i=0;i<N;i++){ const a=j*n+i,b=a+1,c=a+n,d=c+1; I.push(a,c,b,b,c,d); }
+    prims.push({P,Nn,UV,C:jpg?null:C,I,mat:0}); }
+  /* 2. laterais com perfil de solo (horizonte A escuro, latossolo vermelho, saprolito) e fundo */
+  { const P=[],Nn=[],C=[],I=[];
+    const borda=[]; for(let i=0;i<n;i++) borda.push([i,0]); for(let j=1;j<n;j++) borda.push([N,j]); for(let i=N-1;i>=0;i--) borda.push([i,N]); for(let j=N-1;j>0;j--) borda.push([0,j]);
+    const camadas=[[0,hex('#55652e')],[0.04,hex('#4a3522')],[0.14,hex('#4e3220')],[0.2,hex('#9c4c28')],[0.6,hex('#b8653a')],[0.68,hex('#cfa271')],[1,hex('#a88a62')]];
+    const linhas=camadas.length, B=borda.length;
+    borda.forEach(([i,j],k)=>{ const x=(i/N-.5)*TAM, z=(j/N-.5)*TAM, y=altura(x,z);
+      const nx=i===0?-1:i===N?1:0, nz=j===0?-1:j===N?1:0, l=Math.hypot(nx,nz)||1;
+      camadas.forEach(([f,c],r)=>{ const yy= r===0? y : lerp(y-0.06, FUNDO, Math.min(f,1)); const yb = r>0&&r<linhas-1 ? yy+(vnoise(k*0.08,r*3.1)-0.5)*0.1 : yy;
+        P.push(x*S,Math.min(yb,y)*S,z*S); Nn.push(nx/l,0,nz/l); const v=0.9+0.2*vnoise(k*0.3,r*5.7); C.push(c[0]*v,c[1]*v,c[2]*v); }); });
+    for(let k=0;k<B;k++){ const a=k*linhas, b=((k+1)%B)*linhas; for(let r=0;r<linhas-1;r++) I.push(a+r,b+r,a+r+1, b+r,b+r+1,a+r+1); }
+    const o=P.length/3, h=TAM/2*S, cf=hex('#3a3020'); [[-h,-h],[h,-h],[h,h],[-h,h]].forEach(q=>{ P.push(q[0],FUNDO*S,q[1]); Nn.push(0,-1,0); C.push(...cf); }); I.push(o,o+1,o+2,o,o+2,o+3);
+    prims.push({P,Nn,C,I,mat:1}); }
+  /* 3. objetos: árvores, eucalipto, sede, marcos, tripé GNSS */
+  { let P=[],Nn=[],C=[],I=[]; const sem=SEM||semeia();
+    const fecha=()=>{ if(I.length) prims.push({P,Nn,C,I,mat:2}); P=[];Nn=[];C=[];I=[]; };   // blocos de até 65 mil vértices: índices de 16 bits, arquivo menor
+    const poe=(nome,lista)=>{ const G=(nome==='arvore'||nome==='euca')?moldeLeve(nome):molde(nome); for(const q of lista){ if(P.length/3+G.p.length/3>65535) fecha(); const a=q[4]*6.2832, c=Math.cos(a), s=Math.sin(a), sc=q[3], v=0.82+0.36*((q[4]*7.13)%1), o=P.length/3;
+      for(let k=0;k<G.p.length;k+=3){ const lx=G.p[k]*sc, ly=G.p[k+1]*sc, lz=G.p[k+2]*sc; P.push((q[0]+c*lx-s*lz)*S,(q[1]+ly)*S,(q[2]+s*lx+c*lz)*S);
+        Nn.push(c*G.n[k]-s*G.n[k+2],G.n[k+1],s*G.n[k]+c*G.n[k+2]); C.push(Math.min(G.c[k]*v,1),Math.min(G.c[k+1]*v,1),Math.min(G.c[k+2]*v,1)); }
+      for(const ii of G.i) I.push(o+ii); } };
+    const lim=CEL?1100:2400; poe('arvore',sem.arv.slice(0,lim)); poe('euca',sem.euc); poe('casa',[sem.casas[0]]); poe('galpao',[sem.casas[1]]); poe('marco',sem.marcos);
+    const v0=POLI[0]; poe('tripe',[[v0[0],altura(v0[0],v0[1]),v0[1],0.1,0.15]]);
+    fecha(); }
+  /* empacota GLB */
+  const al=(x)=>Math.ceil(x/4)*4, partes=[], views=[], accs=[]; let off=0;
+  const poeView=(arr,target)=>{ const u8=new Uint8Array(arr.buffer,arr.byteOffset,arr.byteLength); partes.push([off,u8]); views.push({buffer:0,byteOffset:off,byteLength:u8.byteLength,...(target?{target}:{})}); off=al(off+u8.byteLength); return views.length-1; };
+  const meshPrims=prims.map(pr=>{
+    const P=new Float32Array(pr.P), nv=P.length/3; let mn=[1e9,1e9,1e9], mx=[-1e9,-1e9,-1e9]; for(let k=0;k<P.length;k+=3) for(let a=0;a<3;a++){ mn[a]=Math.min(mn[a],P[k+a]); mx[a]=Math.max(mx[a],P[k+a]); }
+    const attrs={};
+    accs.push({bufferView:poeView(P,34962),componentType:5126,count:nv,type:'VEC3',min:mn,max:mx}); attrs.POSITION=accs.length-1;
+    accs.push({bufferView:poeView(new Float32Array(pr.Nn),34962),componentType:5126,count:nv,type:'VEC3'}); attrs.NORMAL=accs.length-1;
+    if(pr.UV){ accs.push({bufferView:poeView(new Float32Array(pr.UV),34962),componentType:5126,count:nv,type:'VEC2'}); attrs.TEXCOORD_0=accs.length-1; }
+    if(pr.C){ const c8=new Uint8Array(nv*4); for(let k=0;k<nv;k++){ c8[k*4]=Math.round(Math.min(pr.C[k*3],1)*255); c8[k*4+1]=Math.round(Math.min(pr.C[k*3+1],1)*255); c8[k*4+2]=Math.round(Math.min(pr.C[k*3+2],1)*255); c8[k*4+3]=255; }
+      accs.push({bufferView:poeView(c8,34962),componentType:5121,normalized:true,count:nv,type:'VEC4'}); attrs.COLOR_0=accs.length-1; }
+    const big=nv>65535, I=big?new Uint32Array(pr.I):new Uint16Array(pr.I);
+    accs.push({bufferView:poeView(I,34963),componentType:big?5125:5123,count:I.length,type:'SCALAR'});
+    return {attributes:attrs,indices:accs.length-1,material:pr.mat};
+  });
+  let imgView=-1; if(jpg) imgView=poeView(jpg,0);
+  const bin=new Uint8Array(off); partes.forEach(([o,u8])=>bin.set(u8,o));
+  const mat0={name:'Terreno',pbrMetallicRoughness:{baseColorFactor:[1,1,1,1],metallicFactor:0,roughnessFactor:0.95},doubleSided:false};
+  if(jpg) mat0.pbrMetallicRoughness.baseColorTexture={index:0};
+  const json={asset:{version:'2.0',generator:'Saotech Geotecnologia'},scene:0,scenes:[{nodes:[0]}],nodes:[{mesh:0,name:'Levantamento GNSS ilustrativo'}],
+    meshes:[{primitives:meshPrims}],
+    materials:[mat0,{name:'Perfil do solo',pbrMetallicRoughness:{baseColorFactor:[1,1,1,1],metallicFactor:0,roughnessFactor:1},doubleSided:true},{name:'Objetos',pbrMetallicRoughness:{baseColorFactor:[1,1,1,1],metallicFactor:0,roughnessFactor:0.82},doubleSided:true}],
+    buffers:[{byteLength:bin.byteLength}], bufferViews:views, accessors:accs};
+  if(jpg){ json.images=[{bufferView:imgView,mimeType:'image/jpeg'}]; json.samplers=[{magFilter:9729,minFilter:9987,wrapS:33071,wrapT:33071}]; json.textures=[{sampler:0,source:0}]; }
   let js=new TextEncoder().encode(JSON.stringify(json)); const jl=al(js.length); const jsP=new Uint8Array(jl).fill(32); jsP.set(js);
   const total=12+8+jl+8+bin.byteLength, out=new ArrayBuffer(total), dv=new DataView(out); let o=0;
   dv.setUint32(o,0x46546C67,true); dv.setUint32(o+4,2,true); dv.setUint32(o+8,total,true); o=12;
@@ -1057,18 +1359,21 @@ function iniciaRA(){
   if(raIniciado) return; raIniciado=true;
   const msg=$('#raMsg'), estado=$('#raEstado');
   const falha=()=>{ msg.textContent='O modelo 3D aparece quando o site estiver publicado no endereço da Saotech.'; estado.querySelector('.mark').classList.remove('draw'); };
-  const tempo=setTimeout(falha,15000);
+  const tempo=setTimeout(falha,20000);
   const s=document.createElement('script'); s.type='module';
   s.src='https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js';
   s.onerror=()=>{ clearTimeout(tempo); falha(); };
   document.head.appendChild(s);
-  customElements.whenDefined('model-viewer').then(()=>{
-    let url; try{ url=URL.createObjectURL(new Blob([geraGLB()],{type:'model/gltf-binary'})); }catch(e){ clearTimeout(tempo); falha(); return; }
+  const glb=geraGLB().catch(()=>null);
+  Promise.all([customElements.whenDefined('model-viewer'),glb]).then(([,buf])=>{
+    if(!buf){ clearTimeout(tempo); falha(); return; }
+    const url=URL.createObjectURL(new Blob([buf],{type:'model/gltf-binary'}));
     const mv=document.createElement('model-viewer');
-    mv.setAttribute('src',url); mv.setAttribute('alt','Modelo 3D ilustrativo de um terreno com o perímetro do imóvel e as curvas de nível');
+    mv.setAttribute('src',url); mv.setAttribute('alt','Maquete 3D ilustrativa de um levantamento GNSS: terreno com mata, estrada, sede, marcos nos vértices, receptor no tripé e o perímetro do imóvel');
     mv.setAttribute('camera-controls',''); mv.setAttribute('touch-action','pan-y'); mv.setAttribute('ar',''); mv.setAttribute('ar-modes','webxr scene-viewer quick-look'); mv.setAttribute('ar-placement','floor');
-    mv.setAttribute('shadow-intensity','1'); mv.setAttribute('exposure','1.05'); mv.setAttribute('camera-orbit','35deg 62deg 105%'); mv.setAttribute('interaction-prompt','auto');
-    if(!reduz){ mv.setAttribute('auto-rotate',''); mv.setAttribute('auto-rotate-delay','800'); mv.setAttribute('rotation-per-second','12deg'); }
+    mv.setAttribute('shadow-intensity','1.1'); mv.setAttribute('shadow-softness','0.7'); mv.setAttribute('exposure','1.15'); mv.setAttribute('tone-mapping','neutral');
+    mv.setAttribute('camera-orbit','35deg 60deg 95%'); mv.setAttribute('min-camera-orbit','auto 10deg auto'); mv.setAttribute('max-camera-orbit','auto 88deg auto'); mv.setAttribute('interaction-prompt','auto');
+    if(!reduz){ mv.setAttribute('auto-rotate',''); mv.setAttribute('auto-rotate-delay','800'); mv.setAttribute('rotation-per-second','10deg'); }
     const b=document.createElement('button'); b.className='ra-btn'; b.slot='ar-button'; b.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>Ver na minha mesa';
     mv.appendChild(b);
     mv.addEventListener('load',()=>{ clearTimeout(tempo); estado.hidden=true; },{once:true});
@@ -1080,6 +1385,7 @@ new IntersectionObserver((es,ob)=>{ if(es[0].isIntersecting){ iniciaRA(); ob.dis
 })();
 
 </script>
+<script src="assets/nav.js"></script>
 
 </body>
 </html>

@@ -9,11 +9,7 @@ const esc = (t)=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 function desenhaLogo(){ const m=$('#logoMark'); if(!m||reduz) return; m.classList.remove('draw'); void m.getBoundingClientRect(); m.classList.add('draw'); }
 desenhaLogo();
 $('#logo') && $('#logo').addEventListener('mouseenter',desenhaLogo);
-const mb=$('#menuBtn');
-if(mb){
-  mb.addEventListener('click',()=>{ const t=$('#topo'); const ab=t.classList.toggle('aberto'); mb.setAttribute('aria-expanded',ab); mb.setAttribute('aria-label',ab?'Fechar menu':'Abrir menu'); });
-  $$('#menu a').forEach(a=>a.addEventListener('click',()=>{ $('#topo').classList.remove('aberto'); mb.setAttribute('aria-expanded','false'); }));
-}
+/* menu no celular: assets/nav.js */
 
 /* ---------- Curvas de nível geradas do mesmo terreno do Início ---------- */
 function hash(ix,iy){ let h=(Math.imul(ix,374761393)+Math.imul(iy,668265263))|0; h=Math.imul(h^(h>>>13),1274126177); h^=h>>>16; return (h>>>0)/4294967295; }
