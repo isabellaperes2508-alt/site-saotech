@@ -1,0 +1,26 @@
+/* ===== Faixa de clientes: logos em tom único, rolagem horizontal contínua ===== */
+.clientes{padding-block:88px 96px}
+.clientes .cab{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
+.clientes .cab h2{font-size:clamp(26px,3vw,38px);line-height:1.1}
+.cli-faixa{position:relative;margin-top:44px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.cli-trilho{display:flex;width:max-content;animation:cli-rola 38s linear infinite}
+.cli-faixa:hover .cli-trilho,.cli-faixa:focus-within .cli-trilho{animation-play-state:paused}
+.cli-lista{display:flex;align-items:center;gap:0;margin:0;padding:0;list-style:none}
+.cli-lista li{flex:none;display:flex;align-items:center;justify-content:center;height:96px;padding:0 clamp(28px,4vw,56px);border-right:1px solid var(--borda-2,rgba(247,247,220,.1))}
+.cli-logo{display:block;height:var(--h,40px);aspect-ratio:var(--ar);background:var(--creme,#F7F7DC);opacity:.78;transition:opacity .3s,background-color .3s;
+  -webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.cli-nome{display:flex;flex-direction:column;align-items:center;line-height:1;color:var(--creme,#F7F7DC);opacity:.78;transition:opacity .3s,color .3s;white-space:nowrap}
+.cli-nome b{font-family:var(--f-disp);font-weight:800;font-size:27px;letter-spacing:.04em;text-transform:uppercase}
+.cli-nome small{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;margin-top:7px;opacity:.85}
+.cli-lista li:hover .cli-logo{opacity:1;background:var(--lima,#D9E15A)}
+.cli-lista li:hover .cli-nome{opacity:1;color:var(--lima,#D9E15A)}
+@keyframes cli-rola{to{transform:translate3d(-50%,0,0)}}
+@media (max-width:720px){.clientes{padding-block:64px 72px}.cli-lista li{height:80px}.cli-logo{height:calc(var(--h,40px)*.82)}.cli-nome b{font-size:23px}.cli-trilho{animation-duration:30s}}
+@media (prefers-reduced-motion:reduce){
+  .cli-faixa{-webkit-mask-image:none;mask-image:none}
+  .cli-trilho{animation:none;width:auto;justify-content:center}
+  .cli-trilho .cli-lista{flex-wrap:wrap;justify-content:center}
+  .cli-trilho .cli-lista[aria-hidden]{display:none}
+  .cli-lista li:last-child{border-right:0}
+}
