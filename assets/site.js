@@ -89,7 +89,7 @@ if(form){
     if(v('nome')) l.push('Nome: '+v('nome')); if(v('telefone')) l.push('Telefone: '+v('telefone')); if(v('municipio')) l.push('Município: '+v('municipio'));
     if(v('servico')) l.push('Serviço: '+v('servico')); if(v('area')) l.push('Área aproximada: '+v('area')); if(v('mensagem')) l.push('Situação: '+v('mensagem')); return l.join('\n'); };
   const zap=$('#formZap');
-  const atualiza=()=>{ zap.href='https://wa.me/5528999273720?text='+encodeURIComponent(montaTexto()); };
+  const atualiza=()=>{ zap.href='https://wa.me/5528999273727?text='+encodeURIComponent(montaTexto()); };
   form.addEventListener('input',atualiza); atualiza();
   form.addEventListener('submit',(e)=>{
     e.preventDefault();
