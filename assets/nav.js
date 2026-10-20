@@ -4,7 +4,8 @@
 const topo=document.getElementById('topo'), btn=document.getElementById('menuBtn'), gv=document.getElementById('gaveta');
 if(!topo||!btn||!gv) return;
 const reduz=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const fora=()=>[...document.querySelectorAll('main, footer, .zap')];
+const fora=()=>[...document.querySelectorAll('main, footer, .zap, .barra a, .pular')];
+const bm=document.getElementById('barMenu');
 let aberta=false, desenhou=false;
 
 /* Curvas de nível no fundo da gaveta (mesmo ruído do terreno do site) */
@@ -42,6 +43,7 @@ function abrir(){
   document.dispatchEvent(new CustomEvent('gaveta',{detail:true}));   // o terreno 3D pausa enquanto o menu cobre a tela
   fora().forEach(el=>el.setAttribute('inert',''));
   btn.setAttribute('aria-expanded','true'); btn.setAttribute('aria-label','Fechar menu');
+  if(bm){ bm.setAttribute('aria-expanded','true'); bm.querySelector('.rot').textContent='Fechar'; }
   setTimeout(()=>{ const a=gv.querySelector('.gv-nav a'); a&&a.focus({preventScroll:true}); }, reduz?0:350);
 }
 function fechar(foco){
@@ -53,9 +55,11 @@ function fechar(foco){
   document.dispatchEvent(new CustomEvent('gaveta',{detail:false}));
   fora().forEach(el=>el.removeAttribute('inert'));
   btn.setAttribute('aria-expanded','false'); btn.setAttribute('aria-label','Abrir menu');
-  if(foco!==false) btn.focus({preventScroll:true});
+  if(bm){ bm.setAttribute('aria-expanded','false'); bm.querySelector('.rot').textContent='Menu'; }
+  if(foco!==false) (foco||btn).focus({preventScroll:true});
 }
 btn.addEventListener('click',()=>aberta?fechar():abrir());
+if(bm) bm.addEventListener('click',()=>aberta?fechar(bm):abrir());
 gv.addEventListener('click',e=>{ const a=e.target.closest('a'); if(!a) return;
   const h=a.getAttribute('href')||''; const mesma=a.hasAttribute('aria-current');
   if(mesma){ e.preventDefault(); fechar(false); scrollTo({top:0,behavior:reduz?'auto':'smooth'}); return; }
@@ -65,7 +69,7 @@ addEventListener('keydown',e=>{
   if(!aberta) return;
   if(e.key==='Escape'){ fechar(); return; }
   if(e.key==='Tab'){ /* mantém o foco entre o botão do menu e a gaveta */
-    const itens=[btn,...gv.querySelectorAll('a')], i=itens.indexOf(document.activeElement);
+    const itens=[btn,...gv.querySelectorAll('a'),...(bm&&bm.offsetParent?[bm]:[])], i=itens.indexOf(document.activeElement);
     if(e.shiftKey && i<=0){ e.preventDefault(); itens[itens.length-1].focus(); }
     else if(!e.shiftKey && i===itens.length-1){ e.preventDefault(); itens[0].focus(); }
   }
@@ -86,4 +90,22 @@ function rolou(){
 }
 addEventListener('scroll',()=>{ if(!pend){ pend=true; requestAnimationFrame(rolou); } },{passive:true});
 topo.addEventListener('focusin',()=>{ topo.classList.remove('some'); document.body.classList.remove('topo-some'); });
+
+/* Esconde a barra inferior enquanto o teclado está aberto num campo de formulário */
+const campo=e=>e.target.matches&&e.target.matches('input:not([type=checkbox]):not([type=radio]),textarea,select');
+addEventListener('focusin',e=>{ if(campo(e)) document.body.classList.add('digitando'); });
+addEventListener('focusout',e=>{ if(campo(e)) document.body.classList.remove('digitando'); });
+
+/* Início: atalho "Pular apresentação" enquanto a história em 3D ocupa a tela */
+const hist=document.getElementById('historia');
+if(hist && hist.nextElementSibling){
+  const destino=hist.nextElementSibling; if(!destino.id) destino.id='depois-historia';
+  const a=document.createElement('a'); a.className='pular'; a.href='#'+destino.id;
+  a.innerHTML='Pular apresentação<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>';
+  a.addEventListener('click',e=>{ e.preventDefault(); destino.scrollIntoView({behavior:'auto'}); });
+  document.body.appendChild(a);
+  let pp=false;
+  const confere=()=>{ pp=false; const r=hist.getBoundingClientRect(); a.classList.toggle('on', r.top < -innerHeight*0.5 && r.bottom > innerHeight*1.4); };
+  addEventListener('scroll',()=>{ if(!pp){ pp=true; requestAnimationFrame(confere); } },{passive:true}); confere();
+}
 })();
