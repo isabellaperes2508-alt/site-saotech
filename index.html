@@ -759,6 +759,11 @@ em{font-style:normal;color:var(--lima)}
 const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (s)=>document.querySelector(s);
 const CEL = innerWidth<720;
+/* Modo leve: celulares e aparelhos modestos. O chão do terreno é pintado uma vez numa textura
+   e cada quadro só aplica luz técnica (curvas, perímetro) e neblina; o 3D só redesenha quando a rolagem muda. */
+const conn = navigator.connection||{};
+let LEVE = CEL || (navigator.hardwareConcurrency||8)<=4 || (navigator.deviceMemory||8)<=4 || !!conn.saveData;
+if(LEVE) document.documentElement.classList.add('leve');
 
 /* ================= Carregamento ================= */
 const carga = { alvo:0, atual:0, inicio:performance.now(), feito:false, fim:0 };
@@ -853,6 +858,23 @@ function malha(N){
   for(let j=0;j<N;j++) for(let i=0;i<N;i++){ const a=j*n+i,b=a+1,c=a+n,d=c+1; idx[k++]=a; idx[k++]=c; idx[k++]=b; idx[k++]=b; idx[k++]=c; idx[k++]=d; }
   return {pos,nor,bi,ao,idx,n};
 }
+/* Monta a malha numa thread separada (Web Worker) para a tela não congelar no carregamento */
+function malhaAsync(N){
+  try{
+    const fns=[hash,vnoise,fbm,altura,dLinha,dentro,noEuca,dAcude,bio,malha].map(f=>f.toString()).join('\n');
+    const J=JSON.stringify;
+    const src='const TAM='+TAM+',HMAX='+HMAX+';const POLI='+J(POLI)+',ESTRADA='+J(ESTRADA)+',CARREADOR='+J(CARREADOR)+',RIO='+J(RIO)+',ACUDE='+J(ACUDE)+',SEDE='+J(SEDE)+',EUCA='+J(EUCA)+';\n'
+      +'const ss='+ss.toString()+';\n'+fns+'\nonmessage=e=>{const M=malha(e.data);postMessage(M,[M.pos.buffer,M.nor.buffer,M.bi.buffer,M.ao.buffer,M.idx.buffer]);};';
+    const url=URL.createObjectURL(new Blob([src],{type:'text/javascript'}));
+    return new Promise(res=>{
+      let ok=false; const w=new Worker(url);
+      const fim=(M)=>{ if(ok) return; ok=true; w.terminate(); URL.revokeObjectURL(url); res(M||malha(N)); };
+      w.onmessage=e=>fim(e.data); w.onerror=()=>fim(null); setTimeout(()=>fim(null),15000);
+      w.postMessage(N);
+    });
+  }catch(e){ return Promise.resolve(malha(N)); }
+}
+const pausa=()=>new Promise(r=>setTimeout(r,0));   // devolve a vez ao navegador entre etapas pesadas
 
 /* ================= Objetos 3D: árvores, eucalipto, sede, marcos e GNSS ================= */
 let LOD=1;   // 0 = versão leve (modelo de RA)
@@ -927,17 +949,17 @@ function semeia(){
 
 /* ================= WebGL ================= */
 const cv=$('#terreno');
-const gl=cv.getContext('webgl2',{antialias:true,alpha:false,powerPreference:'high-performance'});
+const gl=cv.getContext('webgl2',{antialias:!LEVE,alpha:false,powerPreference:'high-performance'});
 const VS=`#version 300 es
-in vec3 aPos; in vec3 aNor; in vec4 aBio; in float aAO; uniform mat4 uVP; uniform float uRise;
+layout(location=0) in vec3 aPos; layout(location=1) in vec3 aNor; layout(location=2) in vec4 aBio; layout(location=3) in float aAO; uniform mat4 uVP; uniform float uRise;
 out vec3 vW; out vec3 vN; out float vH; out vec4 vB; out float vAO;
 void main(){ vec3 p=aPos; p.y*=uRise; vW=p; vN=aNor; vH=aPos.y; vB=aBio; vAO=aAO; gl_Position=uVP*vec4(p,1.0); }`;
-const FS=(CEL?'#define LQ\n':'')+`
+const FS_SRC=`
 precision highp float;
 in vec3 vW; in vec3 vN; in float vH; in vec4 vB; in float vAO;
 uniform vec3 uEye; uniform float uContour,uPts,uReveal,uFill,uTime,uHmax,uBake,uFogK;
 uniform vec2 uPoly[6]; uniform vec2 uRoad[25]; uniform vec2 uTrack[10]; uniform vec2 uRio[25]; uniform vec4 uAcude; uniform vec2 uSede;
-uniform vec3 cLow,cFog,cLima,cCreme;
+uniform vec3 cLow,cFog,cLima,cCreme; uniform sampler2D uBase; uniform float uTam;
 out vec4 o;
 float h21(vec2 p){ p=fract(p*vec2(123.34,456.21)); p+=dot(p,p+45.32); return fract(p.x*p.y); }
 float vn(vec2 p){ vec2 i=floor(p), f=fract(p); vec2 u=f*f*(3.-2.*f); return mix(mix(h21(i),h21(i+vec2(1,0)),u.x),mix(h21(i+vec2(0,1)),h21(i+vec2(1,1)),u.x),u.y); }
@@ -947,13 +969,14 @@ float segD(vec2 p, vec2 a, vec2 b, out float t){ vec2 pa=p-a, ba=b-a; t=clamp(do
 void main(){
   vec2 p=vW.xz; vec3 n0=normalize(vN);
   float px=length(fwidth(p))+1e-5;
+  vec3 col;
+  #ifdef BASE
+  col=texture(uBase,p/uTam+.5).rgb;
+  #else
   float det=1.-clamp((px-.012)*22.,0.,1.);          // detalhe fino some com a distância (sem serrilhado)
   float det2=1.-clamp((px-.004)*60.,0.,1.);
   float slope=1.-n0.y;
   float nA=fb(p*1.1), nB=vn(p*6.3+2.), nC=vn(p*27.), nD=vn(p*83.+5.);
-  #ifdef LQ
-  nD=.5;
-  #endif
   float mata=smoothstep(0.,1.,vB.x), cafe=vB.y, euca=vB.z, varz=vB.w;
   /* pasto de braquiária: manchas secas e verdes, terracetes de pisoteio nas encostas */
   vec3 pasto=mix(vec3(.30,.36,.15),vec3(.47,.45,.22),smoothstep(.32,.78,nA));
@@ -966,7 +989,7 @@ void main(){
   /* solo exposto (latossolo vermelho-amarelo) em barrancos e erosões */
   vec3 terra=mix(vec3(.44,.25,.13),vec3(.62,.42,.25),nC);
   float solo=smoothstep(.5,.72,slope+(nB-.5)*.35)*(1.-mata)*(1.-cafe);
-  vec3 col=mix(pasto,terra,solo*.85);
+  col=mix(pasto,terra,solo*.85);
   /* cafezal em curva de nível */
   float r=fract(vH*15.+nA*.4); float lin=smoothstep(.12,.3,r)*(1.-smoothstep(.58,.76,r));
   float falha=step(.18,vn(vec2((p.x+p.y)*22.,floor(vH*15.+nA*.4))));
@@ -1010,7 +1033,7 @@ void main(){
   if(dot(n,n)<.5) n=n0;
   /* luz de fim de tarde */
   vec3 L=normalize(vec3(-.55,.75,.35)); float dif=max(dot(n,L),0.); float hemi=.5+.5*n.y;
-  vec3 luz=uBake>.5 ? vec3(.66)+vec3(.42)*dif : vec3(1.,.93,.80)*dif*1.12+vec3(.36,.43,.40)*hemi*.62;
+  vec3 luz=(uBake>.5&&uBake<1.5) ? vec3(.66)+vec3(.42)*dif : vec3(1.,.93,.80)*dif*1.12+vec3(.36,.43,.40)*hemi*.62;
   col*=luz*vAO;
   if(agua>0.){
     vec3 V=normalize(uEye-vW); float fres=pow(1.-max(V.y,0.),4.);
@@ -1020,7 +1043,9 @@ void main(){
     if(uBake>.5) wc=mix(vec3(.10,.17,.16),vec3(.16,.24,.22),ond);
     col=mix(col,wc,agua);
   }
+  #endif
   /* curvas de nível e perímetro (camada técnica) */
+  if(uBake<1.5){
   float cf=vH*4.0; float w=max(fwidth(cf),1e-4); float d=abs(fract(cf-.5)-.5)/w; float line=1.-smoothstep(.6,1.6,d);
   float major=step(4.5, mod(floor(cf+.5),5.));
   col=mix(col,cLima,line*uContour*(.26+.5*major));
@@ -1037,6 +1062,7 @@ void main(){
     if(uBake<.5){ float ph=fract(uTime*.55+float(i)*.17); float rr=.18+ph*.8;
       float ring=1.-smoothstep(0.,px*1.5+.025,abs(dv-rr));
       col=mix(col,cLima,ring*(1.-ph)*.85*on*(1.-uFill*.7)); }
+  }
   }
   if(uBake<.5){ float dist=length(vW-uEye)/uFogK; col=mix(col,cFog,smoothstep(9.,25.,dist)); }
   o=vec4(col,1.);
@@ -1063,6 +1089,7 @@ void main(){ vec3 n=normalize(vN); if(!gl_FrontFacing) n=-n; vec3 L=normalize(ve
   col=pow(col,vec3(.92));
   col=mix(col,cFog,smoothstep(9.,25.,length(vW-uEye)/uFogK)); o=vec4(col,1.); }`;
 function shader(t,src){ const s=gl.createShader(t); gl.shaderSource(s,src); gl.compileShader(s); if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }
+const fonteFS=(base)=>'#version 300 es\n'+(base?'#define BASE\n':'')+FS_SRC;
 function programa(vs,fs){ const p=gl.createProgram(); gl.attachShader(p,shader(gl.VERTEX_SHADER,vs)); gl.attachShader(p,shader(gl.FRAGMENT_SHADER,fs.startsWith('#version')?fs:'#version 300 es\n'+fs)); gl.linkProgram(p); if(!gl.getProgramParameter(p,gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p)); return p; }
 
 /* Matrizes */
@@ -1095,6 +1122,7 @@ function sincroniza(p){
 }
 let menuAberto=false, prog=0, progSuave=0, mouse=[0,0], mouseS=[0,0], visivel=true, tAnt=0;
 const historia=$('#historia'), pontos=document.querySelectorAll('.trilho i');
+let ligaQuadro=()=>{};
 function lerProgresso(){ const r=historia.getBoundingClientRect(), h=r.height-innerHeight; prog=Math.min(Math.max(-r.top/Math.max(h,1),0),1)*4; }
 
 let SEM=null;                 // instâncias, compartilhadas com o modelo de RA
@@ -1103,24 +1131,69 @@ const MOLDES={arvore:fazArvore, euca:fazEuca, casa:fazCasa, galpao:fazGalpao, ma
 const cacheMolde={}; const molde=(k)=>cacheMolde[k]||(cacheMolde[k]=MOLDES[k]());
 const cacheLeve={}; const moldeLeve=(k)=>{ if(!cacheLeve[k]){ LOD=0; cacheLeve[k]=MOLDES[k](); LOD=1; } return cacheLeve[k]; };
 
-if(gl){
+if(gl){ (async()=>{
   try{
-    const prog_=programa(VS,FS);
-    marca('gl');
     const N = CEL ? 140 : 210;
-    const M=malha(N); marca('terreno');
+    const M=await malhaAsync(N); marca('terreno');
     const vao=gl.createVertexArray(); gl.bindVertexArray(vao);
     const buf=(data,loc,sz)=>{ const b=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,b); gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW); if(loc<0) return; gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,sz,gl.FLOAT,false,0,0); };
-    buf(M.pos,gl.getAttribLocation(prog_,'aPos'),3); buf(M.nor,gl.getAttribLocation(prog_,'aNor'),3); buf(M.bi,gl.getAttribLocation(prog_,'aBio'),4); buf(M.ao,gl.getAttribLocation(prog_,'aAO'),1);
+    buf(M.pos,0,3); buf(M.nor,1,3); buf(M.bi,2,4); buf(M.ao,3,1);
     const ib=gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,M.idx,gl.STATIC_DRAW);
-    gl.useProgram(prog_);
-    const U={}; ['uVP','uRise','uEye','uContour','uPts','uReveal','uFill','uTime','uHmax','uBake','uFogK','uPoly','uRoad','uTrack','uRio','uAcude','uSede','cLow','cFog','cLima','cCreme'].forEach(n=>U[n]=gl.getUniformLocation(prog_,n));
-    gl.uniform2fv(U.uPoly,new Float32Array(POLI.flat())); gl.uniform1f(U.uHmax,HMAX); gl.uniform1f(U.uBake,0); gl.uniform1f(U.uFogK,1);
-    gl.uniform2fv(U.uRoad,new Float32Array(ESTRADA.flat())); gl.uniform2fv(U.uTrack,new Float32Array(CARREADOR.flat())); gl.uniform2fv(U.uRio,new Float32Array(RIO.flat()));
-    gl.uniform4fv(U.uAcude,ACUDE); gl.uniform2fv(U.uSede,SEDE);
-    gl.uniform3fv(U.cLow,hex('#232812')); gl.uniform3fv(U.cFog,hex('#14170A')); gl.uniform3fv(U.cLima,hex('#D9E15A')); gl.uniform3fv(U.cCreme,hex('#F7F7DC'));
+    function unis(P){ gl.useProgram(P); const U={}; ['uVP','uRise','uEye','uContour','uPts','uReveal','uFill','uTime','uHmax','uBake','uFogK','uPoly','uRoad','uTrack','uRio','uAcude','uSede','cLow','cFog','cLima','cCreme','uBase','uTam'].forEach(n=>U[n]=gl.getUniformLocation(P,n));
+      gl.uniform2fv(U.uPoly,new Float32Array(POLI.flat())); gl.uniform1f(U.uHmax,HMAX); gl.uniform1f(U.uBake,0); gl.uniform1f(U.uFogK,1); gl.uniform1f(U.uTam,TAM); gl.uniform1i(U.uBase,1);
+      gl.uniform2fv(U.uRoad,new Float32Array(ESTRADA.flat())); gl.uniform2fv(U.uTrack,new Float32Array(CARREADOR.flat())); gl.uniform2fv(U.uRio,new Float32Array(RIO.flat()));
+      gl.uniform4fv(U.uAcude,ACUDE); gl.uniform2fv(U.uSede,SEDE);
+      gl.uniform3fv(U.cLow,hex('#232812')); gl.uniform3fv(U.cFog,hex('#14170A')); gl.uniform3fv(U.cLima,hex('#D9E15A')); gl.uniform3fv(U.cCreme,hex('#F7F7DC'));
+      return U; }
+    /* programa completo (chão procedural): no modo leve só é compilado se preciso (computador lento, foto da RA) */
+    let PF=null, UF=null; const completo=()=>{ if(!PF){ PF=programa(VS,fonteFS(false)); UF=unis(PF); } return PF; };
+    if(!LEVE) completo();
+    marca('gl'); await pausa();
+    let prog_=PF, U=UF;
+    /* pinta o chão uma vez (vista de cima, sem a camada técnica) numa textura com mipmaps */
+    function pintaBase(R){
+      const tx=gl.createTexture(), fb=gl.createFramebuffer(), rb=gl.createRenderbuffer();
+      gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D,tx); gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA8,R,R,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
+      gl.bindRenderbuffer(gl.RENDERBUFFER,rb); gl.renderbufferStorage(gl.RENDERBUFFER,gl.DEPTH_COMPONENT24,R,R);
+      gl.bindFramebuffer(gl.FRAMEBUFFER,fb); gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,tx,0); gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,rb);
+      gl.viewport(0,0,R,R); gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+      const H=HMAX+2, VPo=[2/TAM,0,0,0, 0,0,-2/H,0, 0,2/TAM,0,0, 0,0,1-1/H,1];
+      completo(); gl.useProgram(PF); gl.bindVertexArray(vao);
+      gl.uniformMatrix4fv(UF.uVP,false,new Float32Array(VPo)); gl.uniform1f(UF.uRise,1); gl.uniform1f(UF.uBake,2); gl.uniform3fv(UF.uEye,[0,30,0]); gl.uniform1f(UF.uTime,0);
+      gl.drawElements(gl.TRIANGLES,M.idx.length,gl.UNSIGNED_INT,0);
+      if(window.__exportaBase){ const px=new Uint8Array(R*R*4); gl.readPixels(0,0,R,R,gl.RGBA,gl.UNSIGNED_BYTE,px); window.__base=px; }   // só para gerar assets/terreno-base.webp
+      gl.bindFramebuffer(gl.FRAMEBUFFER,null); gl.deleteFramebuffer(fb); gl.deleteRenderbuffer(rb);
+      gl.generateMipmap(gl.TEXTURE_2D); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+      const an=gl.getExtension('EXT_texture_filter_anisotropic'); if(an) gl.texParameterf(gl.TEXTURE_2D,an.TEXTURE_MAX_ANISOTROPY_EXT,Math.min(4,gl.getParameter(an.MAX_TEXTURE_MAX_ANISOTROPY_EXT)));
+      gl.activeTexture(gl.TEXTURE0); gl.uniform1f(UF.uBake,0);
+    }
+    function baseDaImagem(img){
+      const tx=gl.createTexture(); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D,tx);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false); gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,img);
+      gl.generateMipmap(gl.TEXTURE_2D); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+      gl.activeTexture(gl.TEXTURE0);
+    }
+    const modesto=(navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=4;
+    let dprMax=Math.min(devicePixelRatio||1, LEVE?(modesto?1:1.25):1.75);
+    let leveLigado=false;
+    async function ligaLeve(lento){
+      if(leveLigado) return; leveLigado=true;
+      let img=null;
+      if(CEL && !window.__exportaBase){ try{ img=new Image(); img.src='assets/terreno-base.webp'; await img.decode(); }catch(e){ img=null; } }
+      if(img) baseDaImagem(img); else pintaBase(CEL?1024:Math.min(2048,gl.getParameter(gl.MAX_TEXTURE_SIZE)));
+      await pausa();
+      const PL=programa(VS,fonteFS(true)); U=unis(PL); prog_=PL;
+      LEVE=true; document.documentElement.classList.add('leve');
+      if(lento) dprMax=Math.min(devicePixelRatio||1,1); if(typeof tam==='function') tam();
+      gl.clearColor(0.078,0.09,0.039,1); ultimaChave='';
+    }
     gl.enable(gl.DEPTH_TEST); gl.clearColor(0.078,0.09,0.039,1);
     $('.palco .fallback').style.visibility='hidden';
+    let ultimaChave='';
+    if(LEVE) await ligaLeve(false);
+    await pausa();
 
     /* Objetos instanciados */
     const progO=programa(VSO,FSO);
@@ -1128,7 +1201,7 @@ if(gl){
     SEM=semeia();
     const grupos=[];
     function grupo(nome,inst,modo,idxs){
-      if(!inst.length) return; const G=molde(nome), va=gl.createVertexArray(); gl.bindVertexArray(va);
+      if(!inst.length) return; const G=(LEVE&&(nome==='arvore'||nome==='euca'))?moldeLeve(nome):molde(nome), va=gl.createVertexArray(); gl.bindVertexArray(va);
       const at=(arr,loc,sz,div)=>{ const b=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,b); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(arr),gl.STATIC_DRAW); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,sz,gl.FLOAT,false,0,0); if(div) gl.vertexAttribDivisor(loc,1); };
       at(G.p,gl.getAttribLocation(progO,'aP'),3); at(G.n,gl.getAttribLocation(progO,'aN'),3); at(G.c,gl.getAttribLocation(progO,'aC'),3);
       at(inst.flatMap(q=>[q[0],q[1],q[2],q[3]]),gl.getAttribLocation(progO,'iP'),4,1);
@@ -1174,10 +1247,9 @@ void main(){ vec4 t=texture(uTex,vUV); float f=smoothstep(16.,36.,length(vW-uEye
     Promise.race([fontePronta, new Promise(r=>setTimeout(r,2500))]).then(desenhaPalavra);
     const ALT_PAL=2.35, DIST_PAL=9.5;
 
-    const dpr=Math.min(devicePixelRatio||1, CEL?1.5:1.75);
-    function tam(){ const w=cv.clientWidth, h=cv.clientHeight; cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); gl.viewport(0,0,cv.width,cv.height); }
+    function tam(){ const w=cv.clientWidth, h=cv.clientHeight; cv.width=Math.round(w*dprMax); cv.height=Math.round(h*dprMax); gl.viewport(0,0,cv.width,cv.height); ultimaChave=''; ligaQuadro(); }
     tam(); addEventListener('resize',tam);
-    addEventListener('pointermove',e=>{ if(e.pointerType==='mouse'){ mouse=[e.clientX/innerWidth-.5, e.clientY/innerHeight-.5]; } },{passive:true});
+    addEventListener('pointermove',e=>{ if(e.pointerType==='mouse'){ mouse=[e.clientX/innerWidth-.5, e.clientY/innerHeight-.5]; liga(); } },{passive:true});
 
     /* Foto aérea do terreno renderizada de cima: vira a textura do modelo de RA */
     assaTextura=function(R){
@@ -1187,18 +1259,19 @@ void main(){ vec4 t=texture(uTex,vUV); float f=smoothstep(16.,36.,length(vW-uEye
       gl.bindFramebuffer(gl.FRAMEBUFFER,fb); gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,tx,0); gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,rb);
       gl.viewport(0,0,R,R); gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
       const H=HMAX+2, VPo=[2/TAM,0,0,0, 0,0,-2/H,0, 0,2/TAM,0,0, 0,0,1-1/H,1];
-      gl.useProgram(prog_); gl.bindVertexArray(vao);
-      gl.uniformMatrix4fv(U.uVP,false,new Float32Array(VPo)); gl.uniform1f(U.uRise,1); gl.uniform1f(U.uBake,1); gl.uniform3fv(U.uEye,[0,30,0]);
-      gl.uniform1f(U.uContour,0.85); gl.uniform1f(U.uPts,6); gl.uniform1f(U.uReveal,1); gl.uniform1f(U.uFill,1); gl.uniform1f(U.uTime,0);
+      completo(); gl.useProgram(PF); gl.bindVertexArray(vao);
+      gl.uniformMatrix4fv(UF.uVP,false,new Float32Array(VPo)); gl.uniform1f(UF.uRise,1); gl.uniform1f(UF.uBake,1); gl.uniform3fv(UF.uEye,[0,30,0]);
+      gl.uniform1f(UF.uContour,0.85); gl.uniform1f(UF.uPts,6); gl.uniform1f(UF.uReveal,1); gl.uniform1f(UF.uFill,1); gl.uniform1f(UF.uTime,0);
       gl.drawElements(gl.TRIANGLES,M.idx.length,gl.UNSIGNED_INT,0);
       const px=new Uint8Array(R*R*4); gl.readPixels(0,0,R,R,gl.RGBA,gl.UNSIGNED_BYTE,px);
       gl.bindFramebuffer(gl.FRAMEBUFFER,null); gl.deleteFramebuffer(fb); gl.deleteTexture(tx); gl.deleteRenderbuffer(rb);
-      gl.uniform1f(U.uBake,0); gl.clearColor(0.078,0.09,0.039,1); gl.viewport(0,0,cv.width,cv.height); liga();
+      gl.uniform1f(UF.uBake,0); gl.clearColor(0.078,0.09,0.039,1); gl.viewport(0,0,cv.width,cv.height); ultimaChave=''; liga();
       return px;
     };
 
-    const t0=performance.now(); let primeiro=true, rodando=false;
-    function liga(){ if(!rodando){ rodando=true; requestAnimationFrame(quadro); } }
+    const t0=performance.now(); let primeiro=true, rodando=false, quietos=0, ultimoDesenho=0, reducoes=0; const intervalos=[]; const amostras=[];
+    function liga(){ if(!rodando && visivel && !menuAberto){ rodando=true; quietos=0; requestAnimationFrame(quadro); } }
+    ligaQuadro=liga;
     new IntersectionObserver(es=>{ visivel=es[0].isIntersecting; if(visivel) liga(); },{rootMargin:'100px'}).observe($('#palco'));
     function quadro(now){
       const t=(now-t0)/1000;
@@ -1207,7 +1280,7 @@ void main(){ vec4 t=texture(uTex,vUV); float f=smoothstep(16.,36.,length(vW-uEye
       const km=1-Math.exp(-dt*3); mouseS[0]+=(mouse[0]-mouseS[0])*km; mouseS[1]+=(mouse[1]-mouseS[1])*km;
       const p=progSuave, i=Math.min(Math.floor(p),3), f=ease(p-i);
       let olho=lerp3(CAM[i][0],CAM[i+1][0],f), alvo=lerp3(CAM[i][1],CAM[i+1][1],f);
-      const idle = reduz?0:(1-Math.min(p,1));
+      const idle = (reduz||LEVE)?0:(1-Math.min(p,1));
       const ang = idle*Math.sin(t*0.12)*0.35 + mouseS[0]*0.25;
       const ca=Math.cos(ang), sa=Math.sin(ang);
       const ox=olho[0]-alvo[0], oz=olho[2]-alvo[2];
@@ -1216,6 +1289,14 @@ void main(){ vec4 t=texture(uTex,vUV); float f=smoothstep(16.,36.,length(vW-uEye
       const vp=new Float32Array(mult(persp(asp<0.8?0.95:0.72,asp,0.08,70), olhar(olho,alvo,[0,1,0])));
       const rise = reduz?1: (carga.feito? 0.15+0.85*ease(Math.min((now-carga.fim)/1700,1)) : 0.15);
       const pts=6*faixa(p,1.15,2);
+      const aPal=1-faixa(p,0.04,0.65);
+      if(LEVE){
+        if(now-ultimoDesenho<30){ requestAnimationFrame(quadro); return; }   // até 30 quadros/s no modo leve
+        const chave=[p.toFixed(4),olho.map(v=>v.toFixed(3)).join(),rise.toFixed(3),texPronta,cv.width,cv.height].join('|');
+        if(chave===ultimaChave){ quietos++; sincroniza(p); if(quietos>20){ rodando=false; return; } requestAnimationFrame(quadro); return; }
+        if(now-ultimoDesenho<200 && reducoes<2){ intervalos.push(now-ultimoDesenho); if(intervalos.length>=30){ const m=intervalos.sort((a,b)=>a-b)[15]; intervalos.length=0; if(m>55){ reducoes++; dprMax=Math.max(0.75,dprMax*0.8); tam(); } } }
+        ultimaChave=chave; quietos=0; ultimoDesenho=now;
+      } else if(carga.feito && amostras.length<45){ amostras.push(dt); if(amostras.length===45){ const m=amostras.slice(5).sort((a,b)=>a-b)[20]; if(m>0.045) ligaLeve(true); } }
       gl.useProgram(prog_); gl.bindVertexArray(vao);
       gl.uniformMatrix4fv(U.uVP,false,vp);
       gl.uniform3fv(U.uEye,olho); gl.uniform1f(U.uFogK,afast);
@@ -1224,13 +1305,12 @@ void main(){ vec4 t=texture(uTex,vUV); float f=smoothstep(16.,36.,length(vW-uEye
       gl.uniform1f(U.uPts, pts);
       gl.uniform1f(U.uReveal, faixa(p,2.1,2.95));
       gl.uniform1f(U.uFill, faixa(p,2.85,3.35));
-      gl.uniform1f(U.uTime, t);
+      gl.uniform1f(U.uTime, LEVE?0:t);
       gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
       gl.drawElements(gl.TRIANGLES,M.idx.length,gl.UNSIGNED_INT,0);
       gl.useProgram(progO);
       gl.uniformMatrix4fv(UO.uVP,false,vp); gl.uniform1f(UO.uRise,rise); gl.uniform1f(UO.uPts,pts); gl.uniform3fv(UO.uEye,olho); gl.uniform3fv(UO.cFog,hex('#14170A')); gl.uniform1f(UO.uFogK,afast);
       for(const g of grupos){ gl.uniform1f(UO.uModo,g.modo); gl.bindVertexArray(g.va); gl.drawElementsInstanced(gl.TRIANGLES,g.n,gl.UNSIGNED_SHORT,0,g.k); }
-      const aPal=1-faixa(p,0.04,0.65);
       if(texPronta && aPal>0.01){
         let hx=alvo[0]-olho[0], hz=alvo[2]-olho[2]; const hl=Math.hypot(hx,hz)||1; hx/=hl; hz/=hl;
         const CEN=[alvo[0]+hx*DIST_PAL, ALT_PAL, alvo[2]+hz*DIST_PAL];
@@ -1252,8 +1332,8 @@ void main(){ vec4 t=texture(uTex,vUV); float f=smoothstep(16.,36.,length(vW-uEye
     document.addEventListener('gaveta',e=>{ menuAberto=e.detail; if(!menuAberto && visivel) liga(); });
     liga();
   }catch(err){ console.warn('Terreno 3D indisponível:',err); assaTextura=null; marca('gl'); marca('terreno'); marca('quadro'); }
-} else { marca('gl'); marca('terreno'); marca('quadro'); }
-addEventListener('scroll',()=>{ lerProgresso(); if(!gl) sincroniza(prog); },{passive:true});
+})(); } else { marca('gl'); marca('terreno'); marca('quadro'); }
+addEventListener('scroll',()=>{ lerProgresso(); if(!gl) sincroniza(prog); else ligaQuadro(); },{passive:true});
 
 /* ================= Frase acende palavra a palavra ================= */
 const fr=$('#frase'), frSec=$('#fraseSec');
@@ -1264,7 +1344,7 @@ function acendeFrase(){ if(reduz) return; const r=fr.getBoundingClientRect(); co
 
 /* ================= Paralaxe ================= */
 const camadas=[...document.querySelectorAll('[data-vel]')];
-function paralaxe(){ if(reduz) return; for(const c of camadas){ const r=c.parentElement.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) continue; const d=(r.top+r.height/2-innerHeight/2); c.style.transform='translate3d(0,'+(d*parseFloat(c.dataset.vel)).toFixed(1)+'px,0)'+(c.dataset.escala?' scale('+c.dataset.escala+')':''); } }
+function paralaxe(){ if(reduz||LEVE) return; for(const c of camadas){ const r=c.parentElement.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) continue; const d=(r.top+r.height/2-innerHeight/2); c.style.transform='translate3d(0,'+(d*parseFloat(c.dataset.vel)).toFixed(1)+'px,0)'+(c.dataset.escala?' scale('+c.dataset.escala+')':''); } }
 
 /* ================= Serviços: vertical vira horizontal ================= */
 const sv=$('#servicos'), trilha=$('#svTrilha'), barra=$('#svBarra');
@@ -1397,7 +1477,15 @@ function iniciaRA(){
     $('#raCena').prepend(mv);
   });
 }
-new IntersectionObserver((es,ob)=>{ if(es[0].isIntersecting){ iniciaRA(); ob.disconnect(); } },{rootMargin:'600px'}).observe($('#raCena'));
+if(LEVE){   /* em aparelhos leves o modelo (5 MB) só é montado quando a pessoa pede, para não travar a rolagem */
+  const est=$('#raEstado'), msg=$('#raMsg');
+  msg.textContent='Toque para carregar a maquete 3D (cerca de 5 MB).';
+  const bt=document.createElement('button'); bt.type='button'; bt.className='ra-btn ra-carrega'; bt.textContent='Carregar modelo 3D';
+  est.appendChild(bt);
+  bt.addEventListener('click',()=>{ bt.remove(); msg.textContent='Preparando o modelo 3D'; const mk=est.querySelector('.mark'); mk&&mk.classList.add('draw'); setTimeout(iniciaRA,60); },{once:true});
+} else {
+  new IntersectionObserver((es,ob)=>{ if(es[0].isIntersecting){ ob.disconnect(); (window.requestIdleCallback||setTimeout)(iniciaRA,{timeout:1500}); } },{rootMargin:'600px'}).observe($('#raCena'));
+}
 })();
 
 </script>

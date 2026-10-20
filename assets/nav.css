@@ -97,6 +97,7 @@ html.gv-trava .zap{opacity:0;pointer-events:none}
   .cta-mob{display:none}
   .cta-mob + .menu-btn{margin-left:auto}
   .gaveta{padding-bottom:calc(var(--barra) + 28px + env(safe-area-inset-bottom,0px))}
+  .cap{padding-bottom:calc(var(--barra) + 76px)}
   .cap-abertura{padding-bottom:calc(var(--barra) + 36px)}
   /* atalho para pular a apresentação em 3D do Início */
   .pular{position:fixed;z-index:44;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(var(--barra) + 14px + env(safe-area-inset-bottom,0px));
@@ -108,3 +109,13 @@ html.gv-trava .zap{opacity:0;pointer-events:none}
   html.gv-trava .pular{opacity:0;pointer-events:none}
 }
 @media (max-width:720px) and (prefers-reduced-motion:reduce){.barra,.pular{transition:none}}
+
+/* ===== Modo leve (celulares e aparelhos modestos): sem desfoque de vidro, que pesa muito na rolagem ===== */
+@media (max-width:720px){
+  .pilula,.cartao,.flut,.chip,.sv-ico,.banda-txt,.ancoras nav,.busca input,.barra,.pular{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+  .pilula{background:rgba(20,23,10,.94)} .cartao{background:rgba(20,23,10,.93)} .chip,.sv-ico{background:rgba(20,23,10,.88)}
+  .banda-txt{background:rgba(20,23,10,.9)} .ancoras nav{background:rgba(20,23,10,.95)} .barra{background:rgba(20,23,10,.97)} .pular{background:rgba(20,23,10,.92)}
+}
+html.leve :is(.pilula,.cartao,.flut,.chip,.sv-ico,.banda-txt,.ancoras nav,.busca input){backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+html.leve .pilula{background:rgba(20,23,10,.94)} html.leve .cartao{background:rgba(20,23,10,.93)} html.leve .flut{background:rgba(20,23,10,.9)}
+.ra-carrega{position:static;transform:none;margin-top:14px;pointer-events:auto}

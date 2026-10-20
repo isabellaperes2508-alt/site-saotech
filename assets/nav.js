@@ -1,6 +1,8 @@
 /* Navegação mobile da Saotech: gaveta em tela cheia, topo que some ao rolar para baixo */
 (function(){
 "use strict";
+/* aparelhos modestos ganham o modo leve também nas páginas internas */
+if(innerWidth<720||(navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=4||(navigator.connection&&navigator.connection.saveData)) document.documentElement.classList.add('leve');
 const topo=document.getElementById('topo'), btn=document.getElementById('menuBtn'), gv=document.getElementById('gaveta');
 if(!topo||!btn||!gv) return;
 const reduz=matchMedia('(prefers-reduced-motion: reduce)').matches;
